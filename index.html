@@ -1057,9 +1057,15 @@ refresh();
 try{const g=JSON.parse(localStorage.getItem("kafeo-guest")||"null");if(g){if(g.name)document.getElementById("oname").value=g.name;if(g.phone)document.getElementById("ophone").value=g.phone;if(g.addr)document.getElementById("oaddr").value=g.addr}}catch(e){}
 (function(){
  let last=null;try{last=JSON.parse(localStorage.getItem("kafeo-last-order")||"null")}catch(e){}
+ const force=location.hash==="#welcome";              // test link: add #welcome to the address
+ if(force&&(!last||!last.items||!last.items.length))last={no:"KF-SAMPLE",at:Date.now()-864e5,type:"Delivery",tot:2648,reward:"Plain Fries",items:[{name:"Kafeo Special Pizza (M)",price:1549,qty:1},{name:"Molten Lava Burger",price:1099,qty:1}]};
  if(!last||!last.items||!last.items.length)return;
- if(Date.now()-last.at<10*60*1000)return;           // not right after ordering
- try{if(sessionStorage.getItem("kafeo-wb-shown"))return;sessionStorage.setItem("kafeo-wb-shown","1")}catch(e){}
+ if(!force){
+  if(Date.now()-last.at<60*1000)return;               // not in the first minute after ordering
+  let shown=0;try{shown=+localStorage.getItem("kafeo-wb-shown")||0}catch(e){}
+  if(Date.now()-shown<20*60*1000)return;              // at most once every 20 minutes
+ }
+ try{localStorage.setItem("kafeo-wb-shown",String(Date.now()))}catch(e){}
  let g={};try{g=JSON.parse(localStorage.getItem("kafeo-guest")||"{}")||{}}catch(e){}
  const first=(g.name||"").split(" ")[0];
  const days=Math.floor((Date.now()-last.at)/864e5);
