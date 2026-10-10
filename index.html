@@ -479,7 +479,7 @@ footer{--line:#2e231c;background:#0d0907;color:var(--cream-dim);font-size:14px;p
         <div><div class="eyebrow">KAFEO deals</div><h2>Made for sharing</h2></div>
         <p>From a solo lunch to a full table. Every KAFEO deal is available for dine-in, takeaway and delivery.</p>
       </div>
-      <div class="rewards" aria-label="Buy More Save More">
+      <div class="rewards" id="rewardsBanner" aria-label="Buy More Save More" hidden>
         <div class="rw"><b>Rs 1,500</b><span>Spend this on one order and get a <strong style="color:#fff">free soft drink</strong></span></div>
         <div class="rw"><b>Rs 2,500</b><span>Get <strong style="color:#fff">free plain fries</strong> with your order</span></div>
         <div class="rw"><b>Rs 3,500</b><span>Get a <strong style="color:#fff">free brownie</strong> for dessert</span></div>
@@ -881,7 +881,8 @@ function refresh(){
  document.getElementById("lines").innerHTML=Object.entries(basket).map(([k,l])=>`<div class="line"><div class="nm"><b>${esc(l.name)}</b><br><span class="price">${fmt(l.price)}</span></div><div class="qty"><button data-k="${esc(k)}" data-d="-1" aria-label="Fewer">−</button><span>${l.qty}</span><button data-k="${esc(k)}" data-d="1" aria-label="More">+</button></div></div>`).join("");
  document.getElementById("total").textContent=fmt(tot);
  const rw=reward(tot),nx=TIERS.find(t=>tot<t[0]);
- document.getElementById("rprog").innerHTML=(rw?`<div style="color:#fff">🎁 Unlocked: <b>${rw[1]}</b> (free)</div>`:"")+
+ document.getElementById("rprog").hidden=!REWARDS_ON;
+ if(REWARDS_ON)document.getElementById("rprog").innerHTML=(rw?`<div style="color:#fff">🎁 Unlocked: <b>${rw[1]}</b> (free)</div>`:"")+
   (nx?`<div style="margin-top:${rw?6:0}px">Add <b>${fmt(nx[0]-tot)}</b> more to get <b>${nx[1]}</b> free</div><div class="rbar"><i style="width:${Math.min(100,tot/nx[0]*100)}%"></i></div>`:`<div style="margin-top:6px">You've unlocked the top KAFEO reward.</div>`);
  markAdded();save();
  if(cnt===0)closeSheet();
@@ -955,8 +956,10 @@ locBtn.addEventListener("click",()=>{
 });
 
 // ---- Buy More Save More ----
+// Buy More Save More is switched OFF by the owner. Set to true only when the owner asks.
+const REWARDS_ON=false;
 const TIERS=[[1500,"Soft drink (345 ml)"],[2500,"Plain Fries"],[3500,"Brownie"]];
-function reward(t){let r=null;TIERS.forEach(x=>{if(t>=x[0])r=x});return r}
+function reward(t){if(!REWARDS_ON)return null;let r=null;TIERS.forEach(x=>{if(t>=x[0])r=x});return r}
 
 // ---- menu search ----
 const ms=document.getElementById("msearch"),mc=document.getElementById("mclear");
@@ -1058,7 +1061,7 @@ try{const g=JSON.parse(localStorage.getItem("kafeo-guest")||"null");if(g){if(g.n
 (function(){
  let last=null;try{last=JSON.parse(localStorage.getItem("kafeo-last-order")||"null")}catch(e){}
  const force=location.hash==="#welcome";              // test link: add #welcome to the address
- if(force&&(!last||!last.items||!last.items.length))last={no:"KF-SAMPLE",at:Date.now()-864e5,type:"Delivery",tot:2648,reward:"Plain Fries",items:[{name:"Kafeo Special Pizza (M)",price:1549,qty:1},{name:"Molten Lava Burger",price:1099,qty:1}]};
+ if(force&&(!last||!last.items||!last.items.length))last={no:"KF-SAMPLE",at:Date.now()-864e5,type:"Delivery",tot:2648,reward:null,items:[{name:"Kafeo Special Pizza (M)",price:1549,qty:1},{name:"Molten Lava Burger",price:1099,qty:1}]};
  if(!last||!last.items||!last.items.length)return;
  if(!force){
   if(Date.now()-last.at<60*1000)return;               // not in the first minute after ordering
@@ -1075,9 +1078,9 @@ try{const g=JSON.parse(localStorage.getItem("kafeo-guest")||"null");if(g){if(g.n
  document.getElementById("wbTitle").textContent=`${greet}${first?", "+first:""}!`;
  document.getElementById("wbSub").textContent=`Here's what you ordered from KAFEO ${when}. Craving it again?`;
  document.getElementById("wbMeta").textContent=`Order ${last.no||""} · ${last.type||""}`;
- document.getElementById("wbItems").innerHTML=last.items.map(i=>`<li><span>${i.qty} × ${esc(i.name)}</span><span class="price">${fmt(i.qty*i.price)}</span></li>`).join("")+(last.reward?`<li><span>1 × ${esc(last.reward)}</span><span class="price" style="color:var(--wa)">FREE</span></li>`:"");
+ document.getElementById("wbItems").innerHTML=last.items.map(i=>`<li><span>${i.qty} × ${esc(i.name)}</span><span class="price">${fmt(i.qty*i.price)}</span></li>`).join("")+(REWARDS_ON&&last.reward?`<li><span>1 × ${esc(last.reward)}</span><span class="price" style="color:var(--wa)">FREE</span></li>`:"");
  document.getElementById("wbTot").textContent=fmt(last.tot);
- const tips=["Try something new: our Iced Latte Collection is Rs 800.","Spend Rs 1,500 or more and your soft drink is on us.","Planning a get-together? Reserve a table right here."];
+ const tips=["Try something new: our Iced Latte Collection is Rs 800.","Planning a get-together? Reserve a table right here."];
  document.getElementById("wbNote").textContent=tips[Math.floor(Math.random()*tips.length)];
  const wb=document.getElementById("wb"),bgw=document.getElementById("wbBg");
  const close=()=>{wb.hidden=true;bgw.hidden=true};
