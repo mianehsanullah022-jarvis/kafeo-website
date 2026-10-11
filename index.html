@@ -1294,7 +1294,7 @@ function pic(cat,n){
 }
 const MENU = [
  {id:"pizza",name:"Pizza",sub:"Small · Medium · Large",sized:true,items:[
-  ["Kafeo Special",[999,1549,2399]],["Supreme",[899,1449,2249]],["Peri Peri",[849,1349,2149]],["Malai Boti",[749,1299,1999]],["Tikka & Fajita",[699,1149,1899]],["Sausages",[649,1099,1699]],["Cheese Lover",[649,1099,1699]],["Veggies Lover",[649,1099,1699]]],
+  ["Kafeo Special",[999,1549,2399]],["Supreme",[899,1449,2249]],["Peri Peri",[849,1349,2149]],["Malai Boti",[749,1299,1999]],["Tikka",[699,1149,1899]],["Fajita",[699,1149,1899]],["Sausages",[649,1099,1699]],["Cheese Lover",[649,1099,1699]],["Veggies Lover",[649,1099,1699]]],
   note:"<b>Extra toppings (S / M / L):</b> cheese or chicken Rs 70 / 130 / 200 · sausage Rs 40 / 80 / 120"},
  {id:"burgers",name:"Burgers",items:[["Molten Lava Burger",1099,"KAFEO signature"],["Steak Burger",949],["Out of Control Burger",749],["Swiss Mushroom Burger",680],["Fiery Fillet Burger",599],["Zinger Burger",549],["Hot & Crispy Burger",499],["Patty Burger",399]],
   note:"<b>Add-ons:</b> cheese slice Rs 70 · olives or jalapeño Rs 50 · mushrooms Rs 70 · chicken patty Rs 200 · chicken fillet Rs 180"},
@@ -1302,7 +1302,7 @@ const MENU = [
  {id:"pasta",name:"Pasta",items:[["Baked Mushroom Pasta",1099],["Red Sauce Pasta",1099],["Fettuccine",999]]},
  {id:"sandwich",name:"Sandwiches & Wraps",items:[["Cheese Lover Sandwich",799],["Cocktail Sandwich",774],["Club Sandwich",749],["Grilled Chicken Sandwich",674],["Grilled Chicken Wrap",674],["Cheese Wrap",674],["Crunchy Wrap",549]]},
  {id:"sides",name:"Fries & Sides",items:[["Loaded Fries",699,"KAFEO signature"],["Masala Fries",675],["Pizza Fries",675],["Jalapeño Cheese Fries",599],["Mayo Cheese Fries",449],["Garlic Mayo Fries",399],["Plain Fries",299],["Chicken Strips (4 pc)",449],["Cheese Sticks (2 pc)",399],["Nuggets (5 pc)",399],["Onion Rings (6 pc)",249]],
-  note:"<b>Dips:</b> Rs 70 each (honey mustard and more) · peri peri Rs 90"},
+  note:"<b>Sauces:</b> burger, BBQ, garlic mayo, creamy mayo or chipotle Rs 70 each · honey mustard or peri peri Rs 90"},
  {id:"wings",name:"Wings",items:[["Baked Wings (6 pc)",449],["Crispy Wings (6 pc)",449],["Honey Wings (5 pc)",449],["BBQ Wings (5 pc)",449]]},
  {id:"coffee",name:"Coffee & Tea",items:[["Caramel Cloud Latte (iced)",800,"New"],["Chocolate Velvet Latte (iced)",800,"New"],["KAFEO Iced Latte",800,"New"],["Latte",399],["Cappuccino",349],["Espresso",245],["Long Black",245],["Kashmiri Chai",320],["Cardamom Tea",299],["Karak Chai",280],["Green Tea",150]]},
  {id:"shakes",name:"Cold Coffee & Shakes",items:[["Caramel Cold Coffee",649],["Oreo Cold Coffee",599],["KitKat Shake",649],["Oreo Shake",499],["Vanilla Shake",499],["Chocolate Shake",499],["Strawberry Shake",499]]},
@@ -1310,13 +1310,13 @@ const MENU = [
  {id:"desserts",name:"Desserts",items:[["Nutella Brownie",399],["Belgian Chocolate Brownie",399],["Nuts Brownie",399]]}
 ];
 const DEALS=[
- ["Starter Boost",649,["Zinger Burger","Regular Coke"],"For one"],
- ["Buddy Boost",1298,["Zinger Burger","Fiery Fillet Burger","Coke 500 ml"],"For two"],
- ["Pizza Power-Up",1473,["Small Tikka Pizza","Crispy Wings","Mint Margarita"],"For one or two"],
+ ["Starter Boost",549,["Zinger Burger","Regular Coke"],"For one"],
+ ["Buddy Boost",1049,["Zinger Burger","Fiery Fillet Burger","Coke 500 ml"],"For two"],
+ ["Pizza Power-Up",1249,["Small Tikka Pizza","Crispy Wings","Mint Margarita"],"For one or two"],
  ["Fries Frenzy",1999,["Large Tikka or Fajita Pizza","Loaded Fries","Coke 1.5 L"],"For three"],
- ["Pizza Combo",2947,["Medium Kafeo Special Pizza","Crispy Wings","Plain Fries","2 Mint Margaritas"],"For two to three"],
+ ["Pizza Combo",2449,["Medium Kafeo Special Pizza","Crispy Wings","Plain Fries","2 Mint Margaritas"],"For two to three"],
  ["Pizza Party Special",2999,["2 Large Tikka or Fajita Pizzas","2 dips","Coke 1.5 L"],"For four to five"],
- ["Kafeo Gathering",4972,["Large Kafeo Special Pizza","Loaded Fries","Hot & Crispy Burger","Grilled Sandwich","Nuggets","Coke 1.5 L"],"For the whole table"]
+ ["Kafeo Gathering",3999,["Large Kafeo Special Pizza","Loaded Fries","Hot & Crispy Burger","Grilled Sandwich","Nuggets","Coke 1.5 L"],"For the whole table"]
 ];
 const fmt=n=>"Rs "+n.toLocaleString("en-US");
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1358,7 +1358,7 @@ const SIG=[
  ["Loaded Fries",699,"Cheese, sauces and jalapeño",IMGS["fries"]],
  ["Zinger Burger",549,"Crunchy fillet, cheese, fresh salad",IMGS["burger"]],
  ["Chocolate Shake",499,"Thick, chilled, dessert in a cup",IMGS["shake"]],
- ["Kafeo Gathering",4972,"The whole table, one deal",IMGS["r-spread"]]
+ ["Kafeo Gathering",3999,"The whole table, one deal",IMGS["r-spread"]]
 ];
 $("#track").innerHTML=SIG.map(([n,p,d,im],i)=>`<article class="card" data-cur="Add"><div class="im"><img src="${im}" alt="${esc(n)} at KAFEO" loading="lazy"></div><span class="no">${String(i+1).padStart(2,"0")} / ${String(SIG.length).padStart(2,"0")}</span><div class="meta"><div><h3>${esc(n)}</h3><p>${esc(d)} · <span class="price">${fmt(p)}</span></p></div><button class="add" data-n="${esc(n.startsWith("Kafeo Gathering")?"Deal: Kafeo Gathering":n)}" data-p="${p}" data-c="${/Pizza/.test(n)?"pizza":/Burger/.test(n)?"burgers":/Wings/.test(n)?"wings":/Pasta/.test(n)?"pasta":/Fries/.test(n)?"sides":""}" aria-label="Add ${esc(n)}">+</button></div></article>`).join("");
 
@@ -1600,8 +1600,8 @@ const OPTS={
  steak:{groups:[["Cooked",["Medium","Medium well","Well done"],1]],add:[["Mushrooms",70],["Jalapeño",50],["Cheese slice",70]]},
  pasta:{groups:[["Spice",SPICE,1]],add:[["Mushrooms",70],["Olives",50]]},
  pizza:{groups:[],add:"pizza"},
- sides:{groups:[],add:[["Dip: Honey mustard",70],["Dip: Garlic mayo",70],["Dip: Peri peri",90]]},
- wings:{groups:[["Spice",SPICE,1]],add:[["Dip: Honey mustard",70],["Dip: Peri peri",90]]}
+ sides:{groups:[],add:[["Garlic mayo sauce",70],["BBQ sauce",70],["Chipotle sauce",70],["Honey mustard sauce",90],["Peri peri sauce",90]]},
+ wings:{groups:[["Spice",SPICE,1]],add:[["BBQ sauce",70],["Garlic mayo sauce",70],["Honey mustard sauce",90],["Peri peri sauce",90]]}
 };
 function pizzaAdds(size){const i={S:0,M:1,L:2}[size]??1;return [["Extra cheese",[70,130,200][i]],["Extra chicken",[70,130,200][i]],["Extra sausage",[40,80,120][i]],["Olives",50],["Jalapeño",50],["Mushrooms",70]]}
 const cm=$("#cm"),cmBg=$("#cmBg");
