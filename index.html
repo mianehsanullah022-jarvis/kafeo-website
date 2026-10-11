@@ -980,49 +980,6 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
     <div class="stick"><div class="w"><div class="k" style="margin-bottom:22px">Welcome to KAFEO</div><p class="mani-t" id="maniT">KAFEO is where coffee, food and motivation meet. Warm light. Deep sofas. Espresso pulled to order. Pizza from the oven. Stay for one cup, leave with a better day.</p></div></div>
   </section>
 
-  <!-- POUR -->
-  <section id="pour" class="pin" data-pin="pour">
-    <div class="stick">
-      <ol class="steps" id="steps">
-        <li data-s="0"><span class="n">01</span><b>Ice</b><small>A tall glass, packed cold</small></li>
-        <li data-s="1"><span class="n">02</span><b>Milk</b><small>Fresh, chilled, poured slow</small></li>
-        <li data-s="2"><span class="n">03</span><b>Espresso</b><small>A double shot, pulled to order</small></li>
-        <li data-s="3"><span class="n">04</span><b>Caramel</b><small>The drizzle that makes it KAFEO</small></li>
-      </ol>
-      <svg id="glass" viewBox="0 0 240 420" role="img" aria-label="An iced latte being built layer by layer">
-        <defs>
-          <clipPath id="gclip"><path d="M44 30 H196 L180 396 Q179 404 170 404 H70 Q61 404 60 396 Z"/></clipPath>
-          <linearGradient id="esp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1f0f"/><stop offset=".6" stop-color="#6b3b1c"/><stop offset="1" stop-color="#6b3b1c" stop-opacity="0"/></linearGradient>
-          <linearGradient id="shine" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/></linearGradient>
-        </defs>
-        <rect id="stream" x="114" y="-60" width="12" height="0" rx="6" fill="#4a2814"/>
-        <g clip-path="url(#gclip)">
-          <rect x="0" y="0" width="240" height="420" fill="#ffffff8c"/>
-          <rect id="milk" x="0" y="404" width="240" height="0" fill="#efe1cb"/>
-          <rect id="espL" x="0" y="404" width="240" height="0" fill="url(#esp)"/>
-          <g id="ice" fill="#e8f7ffd0" stroke="#7fd0ff" stroke-width="2">
-            <rect x="62" y="250" width="54" height="50" rx="9" transform="rotate(-12 89 275)"/>
-            <rect x="122" y="268" width="52" height="48" rx="9" transform="rotate(10 148 292)"/>
-            <rect x="80" y="196" width="50" height="46" rx="9" transform="rotate(8 105 219)"/>
-            <rect x="132" y="210" width="46" height="44" rx="8" transform="rotate(-8 155 232)"/>
-            <rect x="96" y="142" width="48" height="44" rx="8" transform="rotate(14 120 164)"/>
-          </g>
-          <path id="drz" d="M60 40 C70 120 52 170 66 250 S58 340 70 396 M180 40 C170 110 188 180 172 260 S182 350 168 396 M120 36 C112 90 132 130 118 190" fill="none" stroke="#c97a2a" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
-          <g id="print" opacity="0"><text x="120" y="300" text-anchor="middle" font-family="Bodoni Moda, Georgia, serif" font-size="34" fill="#2a160a" letter-spacing="2">KAFEO</text><text x="120" y="318" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2a160a" letter-spacing="2">COFFEE · FOOD · MOTIVATION</text></g>
-          <rect x="44" y="30" width="60" height="380" fill="url(#shine)"/>
-        </g>
-        <path class="gs" d="M44 30 H196 L180 396 Q179 404 170 404 H70 Q61 404 60 396 Z" fill="none" stroke="#2b1a12" stroke-width="3"/>
-        <ellipse class="gs" cx="120" cy="30" rx="76" ry="7" fill="none" stroke="#2b1a12" stroke-width="2"/>
-      </svg>
-      <div class="pour-r">
-        <div class="k">The KAFEO Iced Latte</div>
-        <h2 class="d" id="pourT" data-i18n="pour.t">Built in four<br><i>slow</i> layers.</h2>
-        <p>Every iced latte at KAFEO is poured the same careful way. Keep scrolling and watch yours come together.</p>
-        <div class="pct">POUR <b id="pct">0%</b></div>
-      </div>
-    </div>
-  </section>
-
   <!-- KAFEO BEEF: COMING SOON -->
   <section id="beef" aria-labelledby="beefT">
     <canvas id="ember" aria-hidden="true"></canvas>
@@ -1504,8 +1461,6 @@ function sizeSig(){
  const dist=track.scrollWidth-innerWidth;sigEl.style.height=(dist+innerHeight)+"px";
 }
 function prog(el){const r=el.getBoundingClientRect();const total=el.offsetHeight-innerHeight;return total<=0?0:clamp(-r.top/total)}
-const G={milk:$("#milk"),esp:$("#espL"),ice:$("#ice"),drz:$("#drz"),print:$("#print"),stream:$("#stream")};
-const steps=$$("#steps li"),pct=$("#pct");
 const sky=$("#sky"),orb=$("#orb"),arc=$("#arc"),starsEl=$("#stars"),clk=$("#clk"),dps=$$(".dp");
 const SKY=[[92,58,34],[124,76,30],[84,40,22],[18,12,10]];
 function lerpC(a,b,t){return a.map((v,i)=>Math.round(v+(b[i]-v)*t))}
@@ -1517,16 +1472,6 @@ function render(){
  // manifesto
  if(!RM){const p=prog(pins.mani);const lit=p*1.25*mw.length;mw.forEach((w,i)=>w.style.opacity=clamp(lit-i,.12,1))}
  else mw.forEach(w=>w.style.opacity=1);
- // pour
- const pp=RM?1:prog(pins.pour);
- const iceT=ease(seg(pp,0,.2)),milkT=ease(seg(pp,.18,.45)),espT=ease(seg(pp,.42,.7)),drzT=seg(pp,.68,.9),prT=seg(pp,.88,1);
- G.ice.style.transform=`translateY(${(1-iceT)*-340}px)`;G.ice.style.opacity=iceT>0?1:0;
- const mh=250*milkT;G.milk.setAttribute("y",404-mh);G.milk.setAttribute("height",mh);
- const eh=110*espT;G.esp.setAttribute("y",404-mh-eh*.55);G.esp.setAttribute("height",eh);
- const streaming=pp>.42&&pp<.7;G.stream.setAttribute("height",streaming?(404-mh)+60:0);G.stream.setAttribute("y",-60);
- G.drz.style.strokeDashoffset=1-drzT;G.print.setAttribute("opacity",prT);
- const si=pp<.18?0:pp<.42?1:pp<.68?2:3;steps.forEach((s,i)=>s.classList.toggle("on",RM||i<=si&&pp>0.01||i===0));
- pct.textContent=Math.round(pp*100)+"%";
  // signatures
  if(sigEl&&innerWidth>760&&!RM){
   const sp=prog(sigEl),dist=track.scrollWidth-innerWidth;
