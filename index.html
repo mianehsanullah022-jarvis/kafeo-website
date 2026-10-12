@@ -1983,7 +1983,7 @@ $$(".zone").forEach(z=>{const pick=()=>{zone=z.dataset.z;$$(".zone").forEach(x=>
 /* ===================== Delivery area, payment, install (KAFEO 3.0) ===================== */
 // Owner settings: change these if anything changes.
 const DELIV={maxKm:6,minOrder:1000,freeFrom:2000,cafe:{lat:31.5395,lng:74.3320}}; // café pin is approximate (Shadman Chowk)
-const JAZZ={number:"",title:""}; // add the JazzCash number + account title here when available
+const JAZZ={till:"981601323",tillTitle:"MIAN DAIRY FARMS",naya:"03177867860",nayaTitle:"MUHAMMAD NAEEM ABBAS"}; // JazzCash Business Till ID + Naya Pay number
 const AREAS=[["Shadman",31.5395,74.3320],["Jail Road",31.5365,74.3400],["GOR-I",31.5530,74.3330],["Zaman Park",31.5560,74.3360],["Race Course",31.5440,74.3430],["Shah Jamal",31.5330,74.3240],["Mozang",31.5520,74.3150],["Ichhra",31.5280,74.3170],["Gulberg",31.5150,74.3460],["Liberty Market",31.5105,74.3440],["Garden Town",31.5070,74.3220],["Muslim Town",31.5130,74.3110],["Mall Road",31.5600,74.3260],["Anarkali",31.5680,74.3090],["Samanabad",31.5390,74.2930],["Garhi Shahu",31.5550,74.3500],["Lahore Cantt",31.5180,74.3770],["Cavalry Ground",31.4980,74.3740],["Iqbal Town",31.5060,74.2860],["Faisal Town",31.4800,74.3110],["Model Town",31.4830,74.3250],["Township",31.4500,74.3100],["Johar Town",31.4700,74.2720],["DHA Phase 5",31.4640,74.4050],["Wapda Town",31.4380,74.2660],["Bahria Town",31.3650,74.1850]];
 function kmFrom(lat,lng){const R=6371,toR=x=>x*Math.PI/180,dLa=toR(lat-DELIV.cafe.lat),dLo=toR(lng-DELIV.cafe.lng);const a=Math.sin(dLa/2)**2+Math.cos(toR(lat))*Math.cos(toR(DELIV.cafe.lat))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(a))*1.3}
 function verdict(km){return km<=DELIV.maxKm-1?"ok":km<=DELIV.maxKm+.5?"maybe":"no"}
@@ -2028,8 +2028,7 @@ function updDelivery(){
  const notes=$("#onote").closest("label");
  notes.insertAdjacentHTML("afterend",`<div class="pay"><div class="fl">Payment</div><div class="opts2"><label class="po" id="pmCashL"><input type="radio" name="pm" id="pm-cash" value="Cash" checked> Cash on delivery</label><label class="po"><input type="radio" name="pm" id="pm-jazz" value="JazzCash"> JazzCash</label></div><div class="jazz" id="jazzBox" hidden></div></div>`);
  const jb=$("#jazzBox");
- jb.innerHTML=JAZZ.number?`<span>Send your total to our JazzCash account, then share the payment screenshot on WhatsApp.</span><div class="jn"><span>${esc(JAZZ.number)}</span><button type="button" class="copy" data-copy="${esc(JAZZ.number)}">Copy</button></div><span>Account title: <b>${esc(JAZZ.title)}</b></span>`
-  :`<span><b>Pay with JazzCash.</b> We'll send our JazzCash number on WhatsApp when we confirm your order. Please share the payment screenshot there.</span>`;
+ jb.innerHTML=`<span>Send your total to one of these accounts, then share the payment screenshot on WhatsApp.</span><div class="jn"><span>JazzCash Till: ${esc(JAZZ.till)}</span><button type="button" class="copy" data-copy="${esc(JAZZ.till)}">Copy</button></div><span>Account title: <b>${esc(JAZZ.tillTitle)}</b></span><div class="jn"><span>Naya Pay: ${esc(JAZZ.naya)}</span><button type="button" class="copy" data-copy="${esc(JAZZ.naya)}">Copy</button></div><span>Account title: <b>${esc(JAZZ.nayaTitle)}</b></span>`;
  jb.querySelectorAll(".copy[data-copy]").forEach(b=>b.addEventListener("click",()=>{(navigator.clipboard?navigator.clipboard.writeText(b.dataset.copy):Promise.reject()).then(()=>{b.textContent="Copied";setTimeout(()=>b.textContent="Copy",1500)}).catch(()=>{})}));
  $$('input[name="pm"]').forEach(r=>r.addEventListener("change",()=>jb.hidden=!$("#pm-jazz").checked));
  $$('input[name="ot"]').forEach(r=>r.addEventListener("change",updDelivery));
@@ -2037,7 +2036,7 @@ function updDelivery(){
  updDelivery();
 })();
 function delLabel(t){return t>=DELIV.freeFrom?"Free":"Charge by distance, to confirm on WhatsApp (order under "+fmt(DELIV.freeFrom)+")"}
-function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?(JAZZ.number?"JazzCash (to "+JAZZ.number+")":"JazzCash (please send account details)"):(type==="Delivery"?"Cash on delivery":"Cash at the counter")}
+function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"JazzCash or Naya Pay":(type==="Delivery"?"Cash on delivery":"Cash at the counter")}
 
 /* ---------- install as an app ---------- */
 (function(){
