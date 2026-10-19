@@ -1335,6 +1335,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   <div id="lines"></div>
   <div class="tot"><span>Total</span><span class="price" id="total">Rs 0</span></div>
   <form id="orderForm" style="display:grid;gap:10px" novalidate>
+    <input id="ohp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
     <div class="seg" role="radiogroup" aria-label="Order type">
       <label><input type="radio" name="ot" id="ot-del" value="Delivery" checked> Delivery</label>
       <label><input type="radio" name="ot" id="ot-take" value="Takeaway"> Takeaway</label>
@@ -1368,6 +1369,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 document.querySelectorAll("img[data-img]").forEach(i=>i.src=IMGS[i.dataset.img]);
 const WA="923042077720";
 const ORDER_EMAIL_URL="https://formsubmit.co/ajax/mianehsanullah022@gmail.com";
+const POS_ORDER_URL="https://tcsigufnamlqssraignw.supabase.co/functions/v1/web-order"; // KAFEO POS: every website order lands on the counter
 const PIC={
  "Kafeo Special":IMGS["t-kafeopizza"],"Supreme":IMGS["t-ai-pizza"],"Cheese Lover":IMGS["t-cheesepizza"],"Veggies Lover":IMGS["t-cheesepizza"],
  "Zinger Burger":IMGS["t-zinger"],"Hot & Crispy Burger":IMGS["t-zinger"],"Fiery Fillet Burger":IMGS["t-zinger"],
@@ -1606,19 +1608,32 @@ $("#locBtn").addEventListener("click",()=>{const lm=$("#locMsg"),b=$("#locBtn"),
 
 /* ---------- send helpers ---------- */
 function sendEmail(d){return fetch(ORDER_EMAIL_URL,{method:"POST",keepalive:true,headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(Object.assign({_template:"box",_captcha:"false"},d))})}
+/* KAFEO POS: send the order to the counter first. If the signal drops, it waits in an outbox and is resent. */
+const OUTBOX="kafeo-pos-outbox";
+function outbox(){try{return JSON.parse(localStorage.getItem(OUTBOX)||"[]")||[]}catch(e){return[]}}
+function setOutbox(a){try{localStorage.setItem(OUTBOX,JSON.stringify(a.slice(-10)))}catch(e){}}
+function sendPOS(d){return fetch(POS_ORDER_URL,{method:"POST",keepalive:true,headers:{"Content-Type":"application/json"},body:JSON.stringify(d)}).then(r=>r.json().catch(()=>({})).then(j=>Object.assign({status:r.status},j)))}
+function posSent(d,r){if(r.ok||(r.status>=400&&r.status<500))setOutbox(outbox().filter(x=>x.ref!==d.ref));return r}
+function flushOutbox(){outbox().forEach(d=>{if(Date.now()-(d.at||0)>864e5){setOutbox(outbox().filter(x=>x.ref!==d.ref));return}sendPOS(d).then(r=>posSent(d,r)).catch(()=>{})})}
+addEventListener("online",flushOutbox);setTimeout(flushOutbox,2500);
+function cleanPhonePK(raw){let d=String(raw||"").replace(/\D/g,"");if(d.startsWith("0092"))d=d.slice(2);if(d.startsWith("92")&&d.length===12)d="0"+d.slice(2);if(d.length===10&&d.startsWith("3"))d="0"+d;return d}
 function openWA(t){const a=document.createElement("a");a.href=`https://wa.me/${WA}?text=${encodeURIComponent(t)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
 
 $("#orderForm").addEventListener("submit",e=>{e.preventDefault();const m=$("#omsg");
  const ls=Object.values(basket);if(!ls.length){m.textContent="Add something from the menu first.";return}
  const type=document.querySelector('input[name="ot"]:checked').value,name=$("#oname").value.trim(),phone=$("#ophone").value.trim(),addr=$("#oaddr").value.trim(),note=$("#onote").value.trim();
  if(!phone){m.textContent="Please add your phone number so KAFEO can confirm.";$("#ophone").focus();return}
+ if(!/^03\d{9}$/.test(cleanPhonePK(phone))){m.textContent="Please enter a valid mobile number, like 0300 1234567.";$("#ophone").focus();return}
  if(type==="Delivery"&&!addr&&!geo){m.textContent="Please add your address or tap Use my current location.";return}
  if(type==="Delivery"){const t0=ls.reduce((a,l)=>a+l.qty*l.price,0);if(t0<DELIV.minOrder){m.textContent=`Delivery needs a minimum order of ${fmt(DELIV.minOrder)}. Add ${fmt(DELIV.minOrder-t0)} more, or choose Takeaway.`;return}const k0=geoKm();if(k0!=null&&verdict(k0)==="no"){m.textContent="Your location is outside our delivery area. Please choose Takeaway or Dine-in.";return}}
- const tot=ls.reduce((a,l)=>a+l.qty*l.price,0),items=ls.map(l=>`• ${l.qty} × ${l.name} — ${fmt(l.qty*l.price)}`).join("\n"),no="KF-"+Date.now().toString(36).toUpperCase().slice(-6);
- let msg=`Assalam o Alaikum KAFEO! I'd like to order (${type}):\n\n${items}\n\nTotal: ${fmt(tot)}`;if(name)msg+=`\nName: ${name}`;msg+=`\nPhone: ${phone}`;if(type==="Delivery"&&addr)msg+=`\nAddress: ${addr}`;if(type==="Delivery"&&geo)msg+=`\nLocation pin: ${geo.link}`;if(note)msg+=`\nNotes: ${note}`;msg+=`\nPayment: ${payLabel(type)}`;if(type==="Delivery")msg+=`\nDelivery: ${delLabel(tot)}`;
+ const tot=ls.reduce((a,l)=>a+l.qty*l.price,0),items=ls.map(l=>`• ${l.qty} × ${l.name} — ${fmt(l.qty*l.price)}`).join("\n"),no="KF-"+Date.now().toString(36).toUpperCase().slice(-6)+Math.random().toString(36).slice(2,5).toUpperCase().replace(/[^A-Z0-9]/g,"X").padEnd(3,"X");
+ let msg=`Assalam o Alaikum KAFEO! I'd like to order (${type}):\n\n${items}\n\nTotal: ${fmt(tot)}`;if(name)msg+=`\nName: ${name}`;msg+=`\nPhone: ${phone}`;if(type==="Delivery"&&addr)msg+=`\nAddress: ${addr}`;if(type==="Delivery"&&geo)msg+=`\nLocation pin: ${geo.link}`;if(note)msg+=`\nNotes: ${note}`;msg+=`\nPayment: ${payLabel(type)}`;if(type==="Delivery")msg+=`\nDelivery: ${delLabel(tot)}`;msg+=`\nOrder ref: ${no}`;
  m.textContent="Sending your order to KAFEO…";
+ const km=geoKm(),pos={ref:no,type,name,phone,address:type==="Delivery"?addr:"",note,payment:payLabel(type),delivery:type==="Delivery"?delLabel(tot):"",geo:type==="Delivery"&&geo?{lat:geo.lat,lng:geo.lng}:null,distance_km:km!=null?+km.toFixed(1):null,items:ls.map(l=>({name:l.name,price:l.price,qty:l.qty})),total:tot,website:($("#ohp")||{}).value||"",at:Date.now()};
+ setOutbox(outbox().filter(x=>x.ref!==no).concat([pos]));
+ sendPOS(pos).then(r=>{posSent(pos,r);m.textContent=r.ok?`Order ${no} received at the KAFEO counter ✓ Please press Send on WhatsApp to confirm.`:(r.error||"Order sent on WhatsApp.")}).catch(()=>{m.textContent="Order sent on WhatsApp. We'll confirm there."});
  sendEmail({_subject:`New KAFEO website order ${no} · ${type} · ${fmt(tot)}`,"Order no":no,"Order type":type,"Customer name":name||"(not given)","Phone":phone,"Address":type==="Delivery"?addr:"(not delivery)","Location pin":type==="Delivery"&&geo?geo.link:"-","Items":items,"Total":fmt(tot),"Payment":payLabel(type),"Delivery fee":type==="Delivery"?delLabel(tot):"-","Distance (est.)":geoKm()!=null?geoKm().toFixed(1)+" km":"-","Notes":note||"-","Placed at":new Date().toLocaleString("en-PK",{timeZone:"Asia/Karachi"}),"Source":"KAFEO 3.0 site"})
-  .then(r=>m.textContent=r.ok?`Order ${no} received by KAFEO. WhatsApp is opening to confirm.`:"Order sent on WhatsApp.").catch(()=>m.textContent="Order sent on WhatsApp.");
+  .catch(()=>{});
  saveLast(no,type,tot,ls,{name,phone,addr});openWA(msg);basket={};refresh();
 });
 
