@@ -929,6 +929,36 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 @keyframes spk{0%{opacity:0;transform:scale(.3)}20%{opacity:1}100%{opacity:0;transform:translate(calc((var(--d)*20px) - 10px),-26px) scale(.6)}}
 @media (max-width:860px){.beef-stage{max-width:440px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== Quick order (Oct 2026) ===== */
+.fav{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--hair);background:transparent;color:var(--dim);font-size:15px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:color .2s,border-color .2s,transform .2s}
+.fav:hover{border-color:var(--caramel);color:var(--caramel)}
+.fav.on{color:var(--flame);border-color:var(--flame)}
+.fav.pop{animation:bump .4s}
+.quick{display:grid;gap:14px;margin:0 0 22px}
+.quick[hidden]{display:none}
+.qcard{border:1px solid var(--caramel);border-radius:20px;padding:16px 18px;background:color-mix(in srgb,var(--caramel) 9%,var(--card));display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.qcard .qt{flex:1;min-width:200px}
+.qcard .k{font:500 11px var(--f-m);letter-spacing:.16em;text-transform:uppercase;color:var(--flame)}
+.qcard b{display:block;font-weight:500;margin:4px 0 2px}
+.qcard small{color:var(--dim);font-size:13px}
+.qcard .btn{padding:11px 20px;font-size:14px}
+.qfavs{border:1px dashed var(--hair);border-radius:20px;padding:6px 16px}
+.qfavs .qh{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0 2px;font:500 11px var(--f-m);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.qfavs .it:last-child{border-bottom:0}
+.upsell{margin:14px 0 2px;border:1px solid var(--hair);border-radius:16px;padding:12px 14px}
+.upsell[hidden]{display:none}
+.upsell .uh{font-size:13px;color:var(--dim);margin-bottom:8px}
+.upsell .uh b{color:var(--milk);font-weight:500}
+.upsell .ur{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.upsell .ur button{flex:none;border:1px solid var(--caramel);background:transparent;color:var(--milk);border-radius:999px;padding:8px 12px;font:500 13px var(--f-b);cursor:pointer;white-space:nowrap}
+.upsell .ur button:hover{background:var(--caramel);color:#fff}
+.kxstat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim);margin:2px 0 10px}
+.kxstat i{width:8px;height:8px;border-radius:50%;background:#3fbf6f;flex:none}
+.kxstat.closed i{background:#d9534f}
+.kxtbl{display:flex;align-items:center;gap:10px;border:1px solid var(--caramel);border-radius:12px;padding:10px 12px;font-size:14px;background:color-mix(in srgb,var(--caramel) 12%,transparent)}
+.kxtbl b{font-weight:600}
+@media (max-width:520px){.fav{width:26px;height:26px;border:0;font-size:16px;margin-right:-4px}.it .fav{margin-left:-6px}}
 </style>
 </head>
 <body>
@@ -1110,6 +1140,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
     <div class="w">
       <div class="sh"><div><div class="k">Full menu · PKR</div><h2 class="d lines" data-r data-i18n="menu.t"><span class="ln"><span>The KAFEO</span></span><span class="ln"><span><i>menu</i></span></span></h2></div><p data-r data-i18n="menu.p">Everything we serve, from the morning cappuccino to the midnight pizza. Tap + and send your order on WhatsApp.</p></div>
       <div class="mtools" data-r><div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search: zinger, latte, steak…" aria-label="Search the KAFEO menu" autocomplete="off"></div></div>
+      <div class="quick" id="quick" hidden></div>
       <div class="chips" id="chips" role="tablist"></div>
       <div class="mlist" id="mlist"></div>
     </div>
@@ -1333,7 +1364,9 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   <button class="x" id="sx" aria-label="Close">×</button>
   <div class="k">Your KAFEO order</div>
   <h3 id="shT" data-i18n="sh.t">Send it to KAFEO</h3>
+  <div class="kxstat" id="kxStat"><i></i><span id="kxStatT"></span></div>
   <div id="lines"></div>
+  <div class="upsell" id="upsell" hidden></div>
   <div class="tot"><span>Total</span><span class="price" id="total">Rs 0</span></div>
   <form id="orderForm" style="display:grid;gap:10px" novalidate>
     <input id="ohp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
@@ -1350,6 +1383,8 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
       <div class="note" id="locMsg" role="status" aria-live="polite"></div>
       <label class="fl"><textarea id="oaddr" autocomplete="street-address" placeholder="House, street, area" aria-label="Delivery address"></textarea></label>
     </div>
+    <div id="kxTblWrap" hidden><div class="kxtbl" id="kxTblBadge" hidden></div><label class="fl" id="kxTblField">Table number (optional)<input id="kxTbl" inputmode="numeric" maxlength="4" placeholder="e.g. 7"></label></div>
+    <label class="fl" id="kxReadyWrap" hidden>When should it be ready?<select id="kxReady"></select></label>
     <label class="fl">Notes (optional)<input id="onote" placeholder="Extra cheese, less ice…"></label>
     <button class="btn btn-wa" type="submit" style="margin-top:6px" data-i18n="sh.b">Send order to KAFEO</button>
     <div class="msg" id="omsg" role="status" aria-live="polite"></div>
@@ -1556,8 +1591,9 @@ let curCat=MENU[0].id;
 const chips=$("#chips"),ml=$("#mlist"),q=$("#q");
 chips.innerHTML=MENU.map(c=>`<button class="chip" role="tab" id="c-${c.id}" data-c="${c.id}" aria-selected="${c.id===curCat}">${esc(c.name)}</button>`).join("");
 function addBtn(n,p,l,c){return `<button class="add" data-n="${esc(n)}" data-p="${p}"${c?` data-c="${c}"`:""} aria-label="Add ${esc(l||n)} to order">+</button>`}
-function row(c,n,p,sub,i,key){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)}</b>${sub?`<small>${esc(sub)}</small>`:""}</div><span class="price">${fmt(p)}</span>${addBtn(key||n,p,null,c.id)}</div>`}
-function szRow(c,n,ps,i){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)} Pizza</b><div class="szs">${ps.map((pp,k)=>{const s=["S","M","L"][k];return `<button class="add sz" data-c="pizza" data-n="${esc(n)} Pizza (${s})" data-p="${pp}" aria-label="Add ${esc(n)} Pizza ${["Small","Medium","Large"][k]}"><em>${s}</em>${pp.toLocaleString("en-US")}</button>`}).join("")}</div></div></div>`}
+function row(c,n,p,sub,i,key){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)}</b>${sub?`<small>${esc(sub)}</small>`:""}</div><span class="price">${fmt(p)}</span>${favBtn(c.id,n)}${addBtn(key||n,p,null,c.id)}</div>`}
+function szRow(c,n,ps,i){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)} Pizza</b><div class="szs">${ps.map((pp,k)=>{const s=["S","M","L"][k];return `<button class="add sz" data-c="pizza" data-n="${esc(n)} Pizza (${s})" data-p="${pp}" aria-label="Add ${esc(n)} Pizza ${["Small","Medium","Large"][k]}"><em>${s}</em>${pp.toLocaleString("en-US")}</button>`}).join("")}</div></div>${favBtn(c.id,n)}</div>`}
+function favBtn(c,n){let on=false;try{on=(JSON.parse(localStorage.getItem("kafeo-x-favs")||"[]")||[]).some(f=>f.c===c&&f.n===n)}catch(e){}return `<button type="button" class="fav${on?" on":""}" data-fc="${c}" data-fn="${esc(n)}" aria-pressed="${on}" aria-label="${on?"Remove":"Save"} ${esc(n)} ${on?"from":"to"} favourites">${on?"♥":"♡"}</button>`}
 function renderCat(id){
  const c=MENU.find(x=>x.id===id);let h=`<div class="mhead"><h3>${esc(c.name)}</h3><span>${c.sized?"Small · Medium · Large":c.items.length+" items"}</span></div>`;let i=0;
  c.items.forEach(([n,p,t])=>{if(c.sized)h+=szRow(c,n,p,i++);else h+=row(c,n,p,t,i++)});
@@ -1584,6 +1620,7 @@ function refresh(){
  fabc.hidden=!cnt;fabc.textContent=cnt;
  $("#lines").innerHTML=ls.length?Object.entries(basket).map(([k,l])=>`<div class="line"><div class="nm"><b style="font-weight:500">${esc(l.name)}</b><br><span class="price">${fmt(l.price)}</span></div><div class="qty"><button data-k="${esc(k)}" data-d="-1" aria-label="Fewer">−</button><span>${l.qty}</span><button data-k="${esc(k)}" data-d="1" aria-label="More">+</button></div></div>`).join(""):`<p class="empty">Your order is empty. Tap + on anything you crave.</p>`;
  $("#total").textContent=fmt(tot);mark();try{localStorage.setItem("kafeo-x-basket",JSON.stringify(basket))}catch(e){}
+ if(typeof kxAfterRefresh==="function")kxAfterRefresh();
 }
 function flyTo(x,y){if(RM)return;const d=document.createElement("div");d.className="fly";document.body.appendChild(d);const r=fab.getBoundingClientRect();
  d.animate([{transform:`translate(${x}px,${y}px) scale(1)`},{transform:`translate(${(x+r.left+32)/2}px,${Math.min(y,r.top)-160}px) scale(1.3)`,offset:.5},{transform:`translate(${r.left+32}px,${r.top+32}px) scale(.4)`}],{duration:700,easing:"cubic-bezier(.5,0,.3,1)"}).onfinish=()=>{d.remove();fab.classList.remove("bump");void fab.offsetWidth;fab.classList.add("bump")}}
@@ -1622,7 +1659,7 @@ function openWA(t){const a=document.createElement("a");a.href=`https://wa.me/${W
 
 $("#orderForm").addEventListener("submit",e=>{e.preventDefault();const m=$("#omsg");
  const ls=Object.values(basket);if(!ls.length){m.textContent="Add something from the menu first.";return}
- const type=document.querySelector('input[name="ot"]:checked').value,name=$("#oname").value.trim(),phone=$("#ophone").value.trim(),addr=$("#oaddr").value.trim(),note=$("#onote").value.trim();
+ const type=document.querySelector('input[name="ot"]:checked').value,name=$("#oname").value.trim(),phone=$("#ophone").value.trim(),addr=$("#oaddr").value.trim(),note=[$("#onote").value.trim(),typeof kxExtra==="function"?kxExtra(document.querySelector('input[name="ot"]:checked').value):""].filter(Boolean).join(" · ");
  if(!phone){m.textContent="Please add your phone number so KAFEO can confirm.";$("#ophone").focus();return}
  if(!/^03\d{9}$/.test(cleanPhonePK(phone))){m.textContent="Please enter a valid mobile number, like 0300 1234567.";$("#ophone").focus();return}
  if(type==="Delivery"&&!addr&&!geo){m.textContent="Please add your address or tap Use my current location.";return}
@@ -1635,7 +1672,7 @@ $("#orderForm").addEventListener("submit",e=>{e.preventDefault();const m=$("#oms
  sendPOS(pos).then(r=>{posSent(pos,r);m.textContent=r.ok?`Order ${no} received at the KAFEO counter ✓ Please press Send on WhatsApp to confirm.`:(r.error||"Order sent on WhatsApp.")}).catch(()=>{m.textContent="Order sent on WhatsApp. We'll confirm there."});
  sendEmail({_subject:`New KAFEO website order ${no} · ${type} · ${fmt(tot)}`,"Order no":no,"Order type":type,"Customer name":name||"(not given)","Phone":phone,"Address":type==="Delivery"?addr:"(not delivery)","Location pin":type==="Delivery"&&geo?geo.link:"-","Items":items,"Total":fmt(tot),"Payment":payLabel(type),"Delivery fee":type==="Delivery"?delLabel(tot):"-","Distance (est.)":geoKm()!=null?geoKm().toFixed(1)+" km":"-","Notes":note||"-","Placed at":new Date().toLocaleString("en-PK",{timeZone:"Asia/Karachi"}),"Source":"KAFEO 3.0 site"})
   .catch(()=>{});
- saveLast(no,type,tot,ls,{name,phone,addr});openWA(msg);basket={};refresh();
+ saveLast(no,type,tot,ls,{name,phone,addr});if(typeof kxAfterOrder==="function")kxAfterOrder();openWA(msg);basket={};refresh();
 });
 
 /* ---------- VIP reservation ---------- */
@@ -2082,6 +2119,103 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
   for(const p of P){p.y-=p.v;p.x+=Math.sin(t/900+p.s)*.4;if(p.y<-10)Object.assign(p,spawn());
    const fl=.6+.4*Math.sin(t/180+p.s);cx.globalAlpha=p.a*fl*Math.min(1,p.y/H*2);cx.fillStyle=p.r>2?"#ffcf7a":"#ff7a3d";cx.shadowColor="#ff7a3d";cx.shadowBlur=8;cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill()}
   cx.globalAlpha=1})();
+})();
+
+/* ===================== QUICK ORDER (Oct 2026) =====================
+   Added on top of KAFEO 3.0 — nothing above was removed.
+   1) "Your usual" card + favourites (♡) at the top of the menu
+   2) "Complete your order" suggestions inside the basket
+   3) Open/closed status + delivery nudges inside the basket
+   4) Takeaway "ready by" time
+   5) Table QR ordering: kafeo-website/?table=7 opens Dine-in for Table 7
+*/
+(function(){
+ const FAVK="kafeo-x-favs";
+ const favs=()=>LS.get(FAVK,[])||[];
+ const findItem=(c,n)=>{const cat=MENU.find(x=>x.id===c);if(!cat)return null;const it=cat.items.find(x=>x[0]===n);return it?{cat,it}:null};
+
+ /* ---------- 1. Your usual + favourites ---------- */
+ const quick=$("#quick");
+ window.kxRenderQuick=function(){
+  if(!quick)return;
+  const last=LS.get("kafeo-x-last",null),fl=favs().map(f=>findItem(f.c,f.n)).filter(Boolean);let h="";
+  if(last&&last.items&&last.items.length&&last.no!=="KF-SAMPLE"){
+   const cnt=last.items.reduce((a,i)=>a+i.qty,0),names=last.items.map(i=>`${i.qty}× ${i.name}`).join(", ");
+   h+=`<div class="qcard"><div class="qt"><div class="k">Your usual</div><b>${esc(names.length>90?names.slice(0,88)+"…":names)}</b><small>${cnt} item${cnt>1?"s":""} · ${fmt(last.tot)} · ${esc(last.type||"")}</small></div><button type="button" class="btn btn-gold" id="kxAgain">Order again</button></div>`;
+  }
+  if(fl.length){let i=0;h+=`<div class="qfavs"><div class="qh"><span>♥ Your favourites</span><span>${fl.length}</span></div>`+fl.map(({cat,it})=>cat.sized?szRow(cat,it[0],it[1],i++):row(cat,it[0],it[1],it[2],i++)).join("")+`</div>`}
+  quick.innerHTML=h;quick.hidden=!h;mark();
+  const ag=$("#kxAgain");if(ag)ag.onclick=()=>{last.items.forEach(i=>{if(basket[i.name])basket[i.name].qty+=i.qty;else basket[i.name]={...i}});refresh();openS()};
+ };
+ document.addEventListener("click",e=>{const b=e.target.closest(".fav");if(!b)return;e.preventDefault();
+  const c=b.dataset.fc,n=b.dataset.fn;let a=favs();const has=a.some(f=>f.c===c&&f.n===n);
+  a=has?a.filter(f=>!(f.c===c&&f.n===n)):a.concat([{c,n}]);LS.set(FAVK,a.slice(-24));
+  $$(".fav").forEach(x=>{if(x.dataset.fc===c&&x.dataset.fn===n){x.classList.toggle("on",!has);x.textContent=has?"♡":"♥";x.setAttribute("aria-pressed",!has);x.classList.remove("pop");void x.offsetWidth;x.classList.add("pop")}});
+  try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}
+  kxRenderQuick();
+ });
+ window.kxAfterOrder=()=>setTimeout(kxRenderQuick,50);
+
+ /* ---------- 2 + 3. Basket helpers ---------- */
+ const catOf={};MENU.forEach(c=>c.items.forEach(([n])=>{catOf[c.sized?n+" Pizza":n]=c.id}));
+ const keys=Object.keys(catOf).sort((a,b)=>b.length-a.length);
+ function lineCat(n){if(n.startsWith("Deal: "))return"deal";if(n.startsWith("Custom: "))return"coffee";const k=keys.find(k=>n===k||n.startsWith(k+" ("));return k?catOf[k]:""}
+ const DRINKS=["coffee","shakes","mocktails"],MAINS=["pizza","burgers","steak","pasta","sandwich","wings"];
+ const SUG={
+  drink:["Thirsty? Add a drink",[["Mint Margarita",325],["Crimson Mist",375],["Coke / Sprite 500 ml",150],["KAFEO Iced Latte",800]]],
+  side:["Make it a meal",[["Plain Fries",299],["Garlic Mayo Fries",399],["Loaded Fries",699]]],
+  sweet:["Something sweet to finish?",[["Nutella Brownie",399],["Vanilla Ice Cream",350]]],
+  bite:["A bite with your coffee?",[["Belgian Chocolate Brownie",399],["Cheese Sticks (2 pc)",399]]]
+ };
+ const up=$("#upsell"),stat=$("#kxStat"),statT=$("#kxStatT");
+ function hoursNow(){const n=pk(),d=n.getDay(),h=n.getHours()+n.getMinutes()/60,late=x=>x===5||x===6||x===0,prev=(d+6)%7;
+  if(h>=11)return{open:true,until:late(d)?"1 AM":"midnight",closeH:late(d)?25:24,h};
+  if(h<1&&late(prev))return{open:true,until:"1 AM",closeH:1,h};
+  return{open:false,h}}
+ window.kxAfterRefresh=function(){
+  if(!up)return;
+  const ls=Object.values(basket),tot=ls.reduce((a,l)=>a+l.qty*l.price,0),cats=new Set(ls.map(l=>lineCat(l.name)));
+  const st=hoursNow();if(stat){stat.classList.toggle("closed",!st.open);statT.textContent=st.open?`KAFEO is open now · until ${st.until}`:"KAFEO is closed now · opens at 11 AM"}
+  if(!ls.length){up.hidden=true;up.innerHTML="";return}
+  const hasDeal=cats.has("deal"),hasMain=MAINS.some(c=>cats.has(c))||hasDeal,hasDrink=DRINKS.some(c=>cats.has(c))||hasDeal,hasSide=cats.has("sides")||hasDeal,hasSweet=cats.has("desserts");
+  let pick=null;
+  if(hasMain&&!hasDrink)pick="drink";else if(["pizza","burgers","sandwich"].some(c=>cats.has(c))&&!hasSide)pick="side";else if(hasMain&&!hasSweet)pick="sweet";else if(!hasMain&&hasDrink&&!hasSweet&&!cats.has("sides"))pick="bite";
+  let tip="";const del=$("#ot-del")&&$("#ot-del").checked;
+  if(del&&tot<DELIV.minOrder)tip=`Add <b>${fmt(DELIV.minOrder-tot)}</b> more for delivery (minimum ${fmt(DELIV.minOrder)}).`;
+  else if(del&&tot<DELIV.freeFrom)tip=`You're <b>${fmt(DELIV.freeFrom-tot)}</b> away from <b>free delivery</b>.`;
+  const opts=pick?SUG[pick][1].filter(([n])=>!basket[n]):[];
+  if(!opts.length&&!tip){up.hidden=true;up.innerHTML="";return}
+  up.innerHTML=(tip?`<div class="uh">${tip}</div>`:"")+(opts.length?`<div class="uh"><b>${SUG[pick][0]}</b></div><div class="ur">${opts.map(([n,p])=>`<button type="button" data-un="${esc(n)}" data-up="${p}">+ ${esc(n)} · ${fmt(p)}</button>`).join("")}</div>`:"");
+  up.hidden=false;
+ };
+ if(up)up.addEventListener("click",e=>{const b=e.target.closest("[data-un]");if(!b)return;addItem(b.dataset.un,+b.dataset.up)});
+
+ /* ---------- 4. Takeaway "ready by" ---------- */
+ const rw=$("#kxReadyWrap"),rs=$("#kxReady");
+ function fillReady(){if(!rs)return;const st=hoursNow(),cur=rs.value;let o=`<option value="">As soon as possible</option>`;
+  if(st.open){const n=pk();let m=n.getHours()*60+n.getMinutes();if(st.closeH===1&&m>=1440)m-=1440;let t=Math.ceil((m+25)/15)*15;const end=(st.closeH===1?60:st.closeH*60)-15;
+   for(let k=0;t<=end&&k<16;t+=15,k++){const hh=Math.floor(t/60)%24,mm=String(t%60).padStart(2,"0"),L=`${hh%12===0?12:hh%12}:${mm} ${hh<12?"AM":"PM"}`;o+=`<option value="${L}">${L}</option>`}}
+  else o=`<option value="">When KAFEO opens (11 AM)</option>`+["11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:00 PM"].map(L=>`<option value="${L}">${L}</option>`).join("");
+  rs.innerHTML=o;if([...rs.options].some(x=>x.value===cur))rs.value=cur}
+
+ /* ---------- 5. Table QR ordering ---------- */
+ let table="";try{const u=new URL(location.href);table=(u.searchParams.get("table")||u.searchParams.get("t")||((location.hash.match(/^#table[-=]?(\w{1,4})$/i)||[])[1])||"").replace(/[^\w]/g,"").slice(0,4);
+  if(table)sessionStorage.setItem("kafeo-x-table",table);else table=sessionStorage.getItem("kafeo-x-table")||""}catch(e){}
+ const tw=$("#kxTblWrap"),tb=$("#kxTblBadge"),tf=$("#kxTblField"),ti=$("#kxTbl");
+ if(table){const d=$("#ot-dine");if(d){d.checked=true;d.dispatchEvent(new Event("change",{bubbles:true}))}
+  if(tb){tb.innerHTML=`🍽️ <span>You're ordering at <b>Table ${esc(table)}</b> — we'll bring it to you.</span>`;tb.hidden=false}if(tf)tf.hidden=true;
+  setTimeout(()=>{try{toast.innerHTML=`<div class="tt"><b style="font-weight:600">Welcome to KAFEO · Table ${esc(table)}</b><button aria-label="Close" id="tX">×</button></div><div style="font-size:13px;opacity:.85">Tap + on anything you like, then send your order. No waiting for a menu.</div>`;toast.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>toast.hidden=true,6000);$("#tX").onclick=()=>toast.hidden=true}catch(e){}},1200)}
+
+ function syncType(){const t=(document.querySelector('input[name="ot"]:checked')||{}).value;if(tw)tw.hidden=t!=="Dine-in";if(rw)rw.hidden=t!=="Takeaway";if(t==="Takeaway")fillReady();kxAfterRefresh()}
+ $$('input[name="ot"]').forEach(r=>r.addEventListener("change",syncType));
+ fab.addEventListener("click",()=>{fillReady();kxAfterRefresh()});
+
+ window.kxExtra=function(type){const b=[];
+  if(type==="Dine-in"){const t=table||(ti&&ti.value.trim().replace(/[^\w]/g,"").slice(0,4));if(t)b.push("Table "+t)}
+  if(type==="Takeaway"&&rs&&rs.value)b.push("Ready by "+rs.value);
+  return b.join(" · ")};
+
+ syncType();kxRenderQuick();refresh();
 })();
 </script>
 
