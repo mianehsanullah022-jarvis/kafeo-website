@@ -1392,12 +1392,12 @@ const MENU = [
  {id:"pizza",name:"Pizza",sub:"Small · Medium · Large",sized:true,items:[
   ["Kafeo Special",[999,1549,2399]],["Supreme",[899,1449,2249]],["Peri Peri",[849,1349,2149]],["Malai Boti",[749,1299,1999]],["Tikka",[699,1149,1899]],["Fajita",[699,1149,1899]],["Sausages",[649,1099,1699]],["Cheese Lover",[649,1099,1699]],["Veggies Lover",[649,1099,1699]]],
   note:"<b>Extra toppings (S / M / L):</b> cheese or chicken Rs 70 / 130 / 200 · sausage Rs 40 / 80 / 120"},
- {id:"burgers",name:"Burgers",items:[["Molten Lava Burger",1099,"KAFEO signature"],["Steak Burger",949],["Out of Control Burger",749],["Swiss Mushroom Burger",680],["Fiery Fillet Burger",599],["Zinger Burger",549],["Hot & Crispy Burger",499],["Patty Burger",399]],
+ {id:"burgers",name:"Burgers",items:[["Molten Lava Burger",1099,"KAFEO signature"],["Steak Burger",749],["Out of Control Burger",949],["Swiss Mushroom Burger",680],["Fiery Fillet Burger",599],["Zinger Burger",549],["Hot & Crispy Burger",499],["Patty Burger",399]],
   note:"<b>Add-ons:</b> cheese slice Rs 70 · olives or jalapeño Rs 50 · mushrooms Rs 70 · chicken patty Rs 200 · chicken fillet Rs 180"},
  {id:"steak",name:"Steaks",items:[["Mushroom Steak",1349],["Jalapeño Steak",1249],["Mexican Steak",1199],["BBQ Steak",1099],["Black Pepper Steak",1099]]},
- {id:"pasta",name:"Pasta",items:[["Baked Mushroom Pasta",1099],["Red Sauce Pasta",1099],["Fettuccine",999]]},
+ {id:"pasta",name:"Pasta",items:[["Baked Mushroom Pasta",1099],["Red Sauce Pasta",1099],["Alfredo",999]]},
  {id:"sandwich",name:"Sandwiches & Wraps",items:[["Cheese Lover Sandwich",799],["Cocktail Sandwich",774],["Club Sandwich",749],["Grilled Chicken Sandwich",674],["Grilled Chicken Wrap",674],["Cheese Wrap",674],["Crunchy Wrap",549]]},
- {id:"sides",name:"Fries & Sides",items:[["Loaded Fries",699,"KAFEO signature"],["Masala Fries",299],["Pizza Fries",299],["Jalapeño Cheese Fries",599],["Mayo Cheese Fries",449],["Garlic Mayo Fries",399],["Plain Fries",299],["Chicken Strips (4 pc)",449],["Cheese Sticks (2 pc)",399],["Nuggets (5 pc)",399],["Onion Rings (6 pc)",249]],
+ {id:"sides",name:"Fries & Sides",items:[["Loaded Fries",699,"KAFEO signature"],["Masala Fries",299],["Pizza Fries",749],["Jalapeño Cheese Fries",599],["Mayo Cheese Fries",599],["Garlic Mayo Fries",399],["Plain Fries",299],["Chicken Strips (4 pc)",449],["Cheese Sticks (2 pc)",399],["Nuggets (5 pc)",399],["Onion Rings (6 pc)",249]],
   note:"<b>Sauces:</b> burger, BBQ, garlic mayo, creamy mayo or chipotle Rs 70 each · honey mustard or peri peri Rs 90"},
  {id:"wings",name:"Wings",items:[["Baked Wings (6 pc)",449],["Crispy Wings (6 pc)",449],["Honey Wings (5 pc)",449],["BBQ Wings (5 pc)",449]]},
  {id:"coffee",name:"Coffee & Tea",items:[["Caramel Cloud Latte (iced)",800,"New"],["Chocolate Velvet Latte (iced)",800,"New"],["KAFEO Iced Latte",800,"New"],["Latte",399],["Cappuccino",349],["Espresso",245],["Long Black",245],["Kashmiri Chai",320],["Cardamom Tea",299],["Karak Chai",280],["Mix Karak",280],["Mix Cardamom",300],["Green Tea",150]]},
@@ -1451,7 +1451,7 @@ const SIG=[
  ["Cocktail Sandwich","Cocktail Sandwich",774,"Savory chicken with creamy cheese and tangy pickles, layered between fresh bread",IMGS["sig-sandwich"],"sandwich",""],
  ["Premium Mushroom Steak","Mushroom Steak",1349,"Chicken fillet marinated in mushroom sauce, grilled and topped with mushrooms","#steak","steak",""],
  ["Crimson Mist","Crimson Mist",375,"KAFEO's house mocktail: bright, fizzy and ruby red","#mocktail","",""],
- ["Out of Control Burger","Out of Control Burger",749,"Chicken patty, marinated fillet, cheddar, onion rings and a sauce that packs a punch",IMGS["r-burger"],"burgers",""]
+ ["Out of Control Burger","Out of Control Burger",949,"Chicken patty, marinated fillet, cheddar, onion rings and a sauce that packs a punch",IMGS["r-burger"],"burgers",""]
 ];
 $("#track").innerHTML=SIG.map(([n,key,p,d,im,c,tag],i)=>`<article class="s5" data-r style="transition-delay:${i*70}ms" data-cur="Add">${im.startsWith("#")?`<div class="s5im art"><svg aria-hidden="true"><use href="#i-${im.slice(1)}"/></svg></div>`:`<div class="s5im"><img class="rip" src="${im}" alt="${esc(n)} at KAFEO" loading="lazy"></div>`}<span class="no">${String(i+1).padStart(2,"0")}</span><div class="s5b"><h3>${esc(n)}</h3><p>${esc(d)}</p><div class="s5f"><span class="price">${fmt(p)}${tag?` <small>· ${tag}</small>`:""}</span><button class="add" data-n="${esc(key)}" data-p="${p}"${c?` data-c="${c}"`:""} aria-label="Add ${esc(n)}">+</button></div></div></article>`).join("");
 $$("#track [data-r]").forEach(el=>{if(window.io)io.observe(el)});
