@@ -959,6 +959,44 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .kxtbl{display:flex;align-items:center;gap:10px;border:1px solid var(--caramel);border-radius:12px;padding:10px 12px;font-size:14px;background:color-mix(in srgb,var(--caramel) 12%,transparent)}
 .kxtbl b{font-weight:600}
 @media (max-width:520px){.fav{width:26px;height:26px;border:0;font-size:16px;margin-right:-4px}.it .fav{margin-left:-6px}}
+
+/* ===== Quick order: more visible (Oct 2026) ===== */
+.fav{width:34px;height:34px;border:1.5px solid var(--caramel);color:var(--caramel);font-size:17px;background:color-mix(in srgb,var(--caramel) 10%,transparent)}
+.fav.on{background:var(--flame);border-color:var(--flame);color:#fff}
+.it .fav{width:34px;height:34px}
+@media (max-width:520px){.fav,.it .fav{width:32px;height:32px;border:1.5px solid var(--caramel);font-size:16px;margin:0}}
+.fav.hint{animation:kxPulse 1.1s ease 2}
+@keyframes kxPulse{0%,100%{box-shadow:0 0 0 0 #ff7a2f00}50%{box-shadow:0 0 0 8px #ff7a2f55;transform:scale(1.12)}}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhead h3{margin:0;font-family:var(--f-d);font-weight:400;font-size:clamp(28px,3.2vw,40px)}
+.qhead h3 i{color:var(--flame)}
+.qhead .k{font:500 11px var(--f-m);letter-spacing:.16em;text-transform:uppercase;color:var(--flame)}
+.qtiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:820px){.qtiles{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:min(72%,240px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none}.qtiles::-webkit-scrollbar{display:none}}
+.qtile{scroll-snap-align:start;text-align:left;border:1px solid color-mix(in srgb,var(--caramel) 55%,transparent);border-radius:18px;padding:14px 14px 13px;background:linear-gradient(150deg,color-mix(in srgb,var(--caramel) 16%,var(--card)),var(--card));color:var(--milk);cursor:pointer;display:grid;gap:5px;font:inherit;transition:transform .25s,border-color .25s}
+.qtile:hover{transform:translateY(-3px);border-color:var(--flame)}
+.qtile .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(140deg,var(--caramel),var(--flame));color:#fff;font-size:18px}
+.qtile b{font-weight:600;font-size:15px}
+.qtile small{color:var(--dim);font-size:12.5px;line-height:1.35}
+.qcard{border-width:2px;box-shadow:0 22px 44px -26px #ff7a2f}
+.qcard .k::before{content:"⟳  "}
+.upsell{border:1.5px solid var(--caramel);background:color-mix(in srgb,var(--caramel) 12%,transparent);padding:14px}
+.upsell .uh{font-size:14px;color:var(--milk)}
+.upsell .uh b{color:var(--flame);font-weight:600}
+.upsell .ur button{background:var(--card);padding:10px 14px;font-size:14px}
+.kxstat{display:inline-flex;padding:7px 12px;border-radius:999px;border:1px solid #3fbf6f66;background:#3fbf6f1a;color:var(--milk);font-weight:500}
+.kxstat.closed{border-color:#d9534f66;background:#d9534f1a}
+.kxstat i{box-shadow:0 0 0 4px #3fbf6f33;animation:kxBlink 2s infinite}
+.kxstat.closed i{box-shadow:0 0 0 4px #d9534f33;animation:none}
+@keyframes kxBlink{50%{opacity:.35}}
+#kxReadyWrap{border:1.5px solid var(--caramel);border-radius:14px;padding:12px;background:color-mix(in srgb,var(--caramel) 10%,transparent);color:var(--milk);font-weight:500}
+#kxReadyWrap::before{content:"🕒 Pickup time"}
+#kxReadyWrap>select{margin-top:4px}
+.kxtbl{border-width:2px;font-size:15px}
+.fabtot{position:fixed;z-index:65;right:calc(clamp(16px,3vw,32px) + 74px);bottom:calc(31px + env(safe-area-inset-bottom,0px));border:0;border-radius:999px;padding:11px 16px;background:var(--milk);color:#2b1a12;font:600 14px var(--f-b);box-shadow:0 16px 34px -14px #000c;cursor:pointer;white-space:nowrap;animation:rise .4s both}
+.fabtot[hidden]{display:none}
+.fabtot span{opacity:.7;font-weight:500}
+@media (prefers-reduced-motion:reduce){.fav.hint,.kxstat i{animation:none}}
 </style>
 </head>
 <body>
@@ -1359,6 +1397,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 </footer>
 
 <button class="fab" id="fab" aria-label="Open your order"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cnt" id="fabc" hidden>0</span></button>
+<button type="button" class="fabtot" id="fabTot" hidden aria-label="Open your order"></button>
 <div class="sheet-bg" id="sbg" hidden></div>
 <aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" hidden>
   <button class="x" id="sx" aria-label="Close">×</button>
@@ -2130,7 +2169,7 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
    5) Table QR ordering: kafeo-website/?table=7 opens Dine-in for Table 7
 */
 (function(){
- const FAVK="kafeo-x-favs";
+ const FAVK="kafeo-x-favs";let table="";
  const favs=()=>LS.get(FAVK,[])||[];
  const findItem=(c,n)=>{const cat=MENU.find(x=>x.id===c);if(!cat)return null;const it=cat.items.find(x=>x[0]===n);return it?{cat,it}:null};
 
@@ -2144,9 +2183,19 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
    h+=`<div class="qcard"><div class="qt"><div class="k">Your usual</div><b>${esc(names.length>90?names.slice(0,88)+"…":names)}</b><small>${cnt} item${cnt>1?"s":""} · ${fmt(last.tot)} · ${esc(last.type||"")}</small></div><button type="button" class="btn btn-gold" id="kxAgain">Order again</button></div>`;
   }
   if(fl.length){let i=0;h+=`<div class="qfavs"><div class="qh"><span>♥ Your favourites</span><span>${fl.length}</span></div>`+fl.map(({cat,it})=>cat.sized?szRow(cat,it[0],it[1],i++):row(cat,it[0],it[1],it[2],i++)).join("")+`</div>`}
-  quick.innerHTML=h;quick.hidden=!h;mark();
+  const tiles=`<div class="qhead"><div><div class="k">New · faster ordering</div><h3>Quick <i>order</i></h3></div></div><div class="qtiles">`+
+   `<button type="button" class="qtile" data-q="usual"><span class="ic">⟳</span><b>Order your usual</b><small>${last&&last.items&&last.items.length&&last.no!=="KF-SAMPLE"?"Your last order is ready below. One tap.":"Your last order shows up here for one-tap reorder."}</small></button>`+
+   `<button type="button" class="qtile" data-q="fav"><span class="ic">♥</span><b>Save favourites</b><small>${fl.length?`${fl.length} saved below. Tap ♡ to add more.`:"Tap ♡ on any dish to keep it here."}</small></button>`+
+   `<button type="button" class="qtile" data-q="pickup"><span class="ic">🕒</span><b>Pick a pickup time</b><small>Order now, collect it hot at your time.</small></button>`+
+   `<button type="button" class="qtile" data-q="table"><span class="ic">🍽️</span><b>Order from your table</b><small>${table?`You're at Table ${esc(table)}. Tap + and send.`:"Scan the QR on your table, no waiting."}</small></button></div>`;
+  quick.innerHTML=tiles+h;quick.hidden=false;mark();
   const ag=$("#kxAgain");if(ag)ag.onclick=()=>{last.items.forEach(i=>{if(basket[i.name])basket[i.name].qty+=i.qty;else basket[i.name]={...i}});refresh();openS()};
  };
+ if(quick)quick.addEventListener("click",e=>{const t=e.target.closest(".qtile");if(!t)return;const q=t.dataset.q;
+  if(q==="usual"){const ag=$("#kxAgain");if(ag){ag.click()}else{ml.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"})}}
+  else if(q==="fav"){const f=$$("#mlist .fav");f.forEach(x=>{x.classList.remove("hint");void x.offsetWidth;x.classList.add("hint")});if(f[0])f[0].scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})}
+  else{const r=$(q==="pickup"?"#ot-take":"#ot-dine");if(r){r.checked=true;r.dispatchEvent(new Event("change",{bubbles:true}))}openS();if(q==="pickup")fillReady();setTimeout(()=>{const el=$(q==="pickup"?"#kxReady":(table?"#kxTblBadge":"#kxTbl"));if(el)el.scrollIntoView({block:"center"})},120)}
+ });
  document.addEventListener("click",e=>{const b=e.target.closest(".fav");if(!b)return;e.preventDefault();
   const c=b.dataset.fc,n=b.dataset.fn;let a=favs();const has=a.some(f=>f.c===c&&f.n===n);
   a=has?a.filter(f=>!(f.c===c&&f.n===n)):a.concat([{c,n}]);LS.set(FAVK,a.slice(-24));
@@ -2175,6 +2224,7 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
  window.kxAfterRefresh=function(){
   if(!up)return;
   const ls=Object.values(basket),tot=ls.reduce((a,l)=>a+l.qty*l.price,0),cats=new Set(ls.map(l=>lineCat(l.name)));
+  const ft=$("#fabTot");if(ft){const c=ls.reduce((a,l)=>a+l.qty,0);ft.hidden=!c||sheetOpen;ft.innerHTML=`${fmt(tot)} <span>· ${c} item${c>1?"s":""} · Send order →</span>`}
   const st=hoursNow();if(stat){stat.classList.toggle("closed",!st.open);statT.textContent=st.open?`KAFEO is open now · until ${st.until}`:"KAFEO is closed now · opens at 11 AM"}
   if(!ls.length){up.hidden=true;up.innerHTML="";return}
   const hasDeal=cats.has("deal"),hasMain=MAINS.some(c=>cats.has(c))||hasDeal,hasDrink=DRINKS.some(c=>cats.has(c))||hasDeal,hasSide=cats.has("sides")||hasDeal,hasSweet=cats.has("desserts");
@@ -2199,7 +2249,7 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
   rs.innerHTML=o;if([...rs.options].some(x=>x.value===cur))rs.value=cur}
 
  /* ---------- 5. Table QR ordering ---------- */
- let table="";try{const u=new URL(location.href);table=(u.searchParams.get("table")||u.searchParams.get("t")||((location.hash.match(/^#table[-=]?(\w{1,4})$/i)||[])[1])||"").replace(/[^\w]/g,"").slice(0,4);
+ try{const u=new URL(location.href);table=(u.searchParams.get("table")||u.searchParams.get("t")||((location.hash.match(/^#table[-=]?(\w{1,4})$/i)||[])[1])||"").replace(/[^\w]/g,"").slice(0,4);
   if(table)sessionStorage.setItem("kafeo-x-table",table);else table=sessionStorage.getItem("kafeo-x-table")||""}catch(e){}
  const tw=$("#kxTblWrap"),tb=$("#kxTblBadge"),tf=$("#kxTblField"),ti=$("#kxTbl");
  if(table){const d=$("#ot-dine");if(d){d.checked=true;d.dispatchEvent(new Event("change",{bubbles:true}))}
@@ -2209,6 +2259,8 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
  function syncType(){const t=(document.querySelector('input[name="ot"]:checked')||{}).value;if(tw)tw.hidden=t!=="Dine-in";if(rw)rw.hidden=t!=="Takeaway";if(t==="Takeaway")fillReady();kxAfterRefresh()}
  $$('input[name="ot"]').forEach(r=>r.addEventListener("change",syncType));
  fab.addEventListener("click",()=>{fillReady();kxAfterRefresh()});
+ const ftb=$("#fabTot");if(ftb)ftb.addEventListener("click",()=>{openS();fillReady();kxAfterRefresh()});
+ [$("#sx"),sbg].forEach(x=>x&&x.addEventListener("click",()=>setTimeout(kxAfterRefresh,0)));addEventListener("keydown",e=>{if(e.key==="Escape")setTimeout(kxAfterRefresh,0)});
 
  window.kxExtra=function(type){const b=[];
   if(type==="Dine-in"){const t=table||(ti&&ti.value.trim().replace(/[^\w]/g,"").slice(0,4));if(t)b.push("Table "+t)}
