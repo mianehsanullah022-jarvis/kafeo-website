@@ -1496,8 +1496,9 @@ const MENU = [
   note:"<b>Sauces:</b> burger, BBQ, garlic mayo, creamy mayo or chipotle Rs 70 each · honey mustard Rs 70 · peri peri Rs 90"},
  {id:"wings",name:"Wings",items:[["Baked Wings (6 pc)",449],["Crispy Wings (6 pc)",449],["Honey Wings (5 pc)",449],["BBQ Wings (5 pc)",449]]},
  {id:"coffee",name:"Coffee & Tea",items:[["Caramel Cloud Latte (iced)",800,"New"],["Chocolate Velvet Latte (iced)",800,"New"],["KAFEO Iced Latte",800,"New"],["Latte",399],["Cappuccino",349],["Espresso",245],["Long Black",245],["Kashmiri Chai",320],["Cardamom Tea",299],["Karak Chai",280],["Mix Karak",280],["Mix Cardamom",300],["Green Tea",150]]},
- {id:"shakes",name:"Cold Coffee & Shakes",items:[["Caramel Cold Coffee",649],["Oreo Cold Coffee",599],["KitKat Shake",649],["Oreo Shake",499],["Vanilla Shake",499],["Chocolate Shake",499],["Strawberry Shake",499]]},
- {id:"mocktails",name:"Mocktails & Drinks",items:[["Crimson Mist",375,"KAFEO mocktail"],["Jade Valley",375,"KAFEO mocktail"],["Blond Bomb Shell",375,"KAFEO mocktail"],["Mint Margarita",325],["Iced Peach Tea",325],["Fresh Lime",299],["Coke / Sprite 345 ml",100],["Coke / Sprite 500 ml",150],["Coke / Sprite 1 L",220],["Coke / Sprite 1.5 L",300],["Water 500 ml",60],["Water 1.5 L",100]]},
+ {id:"shakes",name:"Cold Coffee & Shakes",sizes:"S · L",items:[["Caramel Cold Coffee",[649,800]],["Oreo Cold Coffee",[599,800]],["Lotus Coffee",[null,950],"Large only"],["KitKat Shake",[649,950]],["Oreo Shake",[549,800]],["Vanilla Shake",[499,700]],["Chocolate Shake",[499,700]],["Strawberry Shake",[499,700]],["Lotus Shake",[null,900],"Large only"]],
+  note:"<b>Sizes:</b> S = Standard · L = Large"},
+ {id:"mocktails",name:"Mocktails & Drinks",items:[["Crimson Mist",[375,500],"KAFEO mocktail"],["Jade Valley",[375,500],"KAFEO mocktail"],["Blond Bomb Shell",[375,500],"KAFEO mocktail"],["Mint Margarita",[325,400]],["Iced Peach Tea",[325,400]],["Fresh Lime",[299,375]],["Coke / Sprite 345 ml",100],["Coke / Sprite 500 ml",150],["Coke / Sprite 1 L",220],["Coke / Sprite 1.5 L",300],["Water 500 ml",60],["Water 1.5 L",100]]},
  {id:"desserts",name:"Desserts",items:[["Nutella Brownie",399],["Belgian Chocolate Brownie",399],["Nuts Brownie",399],["Vanilla Ice Cream",350,"2 scoops"]]}
 ];
 const DEALS=[
@@ -1545,7 +1546,7 @@ const SIG=[
  ["Kafeo Special Pizza","Kafeo Special Pizza (M)",1549,"Our signature pizza with homemade tomato sauce, mozzarella and premium toppings",IMGS["r-pizza"],"pizza","Medium"],
  ["Cocktail Sandwich","Cocktail Sandwich",774,"Savory chicken with creamy cheese and tangy pickles, layered between fresh bread",IMGS["sig-sandwich"],"sandwich",""],
  ["Premium Mushroom Steak","Mushroom Steak",1349,"Chicken fillet marinated in mushroom sauce, grilled and topped with mushrooms","#steak","steak",""],
- ["Crimson Mist","Crimson Mist",375,"KAFEO's house mocktail: bright, fizzy and ruby red","#mocktail","",""],
+ ["Crimson Mist","Crimson Mist (S)",375,"KAFEO's house mocktail: bright, fizzy and ruby red","#mocktail","",""],
  ["Out of Control Burger","Out of Control Burger",949,"Chicken patty, marinated fillet, cheddar, onion rings and a sauce that packs a punch",IMGS["r-burger"],"burgers",""]
 ];
 $("#track").innerHTML=SIG.map(([n,key,p,d,im,c,tag],i)=>`<article class="s5" data-r style="transition-delay:${i*70}ms" data-cur="Add">${im.startsWith("#")?`<div class="s5im art"><svg aria-hidden="true"><use href="#i-${im.slice(1)}"/></svg></div>`:`<div class="s5im"><img class="rip" src="${im}" alt="${esc(n)} at KAFEO" loading="lazy"></div>`}<span class="no">${String(i+1).padStart(2,"0")}</span><div class="s5b"><h3>${esc(n)}</h3><p>${esc(d)}</p><div class="s5f"><span class="price">${fmt(p)}${tag?` <small>· ${tag}</small>`:""}</span><button class="add" data-n="${esc(key)}" data-p="${p}"${c?` data-c="${c}"`:""} aria-label="Add ${esc(n)}">+</button></div></div></article>`).join("");
@@ -1650,7 +1651,8 @@ let curCat=MENU[0].id;
 const chips=$("#chips"),ml=$("#mlist"),q=$("#q");
 chips.innerHTML=MENU.map(c=>`<button class="chip" role="tab" id="c-${c.id}" data-c="${c.id}" aria-selected="${c.id===curCat}">${esc(c.name)}</button>`).join("");
 function addBtn(n,p,l,c){return `<button class="add" data-n="${esc(n)}" data-p="${p}"${c?` data-c="${c}"`:""} aria-label="Add ${esc(l||n)} to order">+</button>`}
-function row(c,n,p,sub,i,key){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)}</b>${sub?`<small>${esc(sub)}</small>`:""}</div><span class="price">${fmt(p)}</span>${favBtn(c.id,n)}${addBtn(key||n,p,null,c.id)}</div>`}
+function dsRow(c,n,ps,sub,i){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)}</b>${sub?`<small>${esc(sub)}</small>`:""}<div class="szs">${ps.map((pp,k)=>{if(pp==null)return "";const s=["S","L"][k];return `<button class="add sz" data-c="${c.id}" data-n="${esc(n)} (${s})" data-p="${pp}" aria-label="Add ${esc(n)} ${["Standard","Large"][k]}"><em>${s}</em>${pp.toLocaleString("en-US")}</button>`}).join("")}</div></div>${favBtn(c.id,n)}</div>`}
+function row(c,n,p,sub,i,key){if(Array.isArray(p))return dsRow(c,n,p,sub,i);return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)}</b>${sub?`<small>${esc(sub)}</small>`:""}</div><span class="price">${fmt(p)}</span>${favBtn(c.id,n)}${addBtn(key||n,p,null,c.id)}</div>`}
 function szRow(c,n,ps,i){return `<div class="it" style="--i:${i}">${pic(c.id,n)}<div class="nm"><b>${esc(n)} Pizza</b><div class="szs">${ps.map((pp,k)=>{const s=["S","M","L"][k];return `<button class="add sz" data-c="pizza" data-n="${esc(n)} Pizza (${s})" data-p="${pp}" aria-label="Add ${esc(n)} Pizza ${["Small","Medium","Large"][k]}"><em>${s}</em>${pp.toLocaleString("en-US")}</button>`}).join("")}</div></div>${favBtn(c.id,n)}</div>`}
 function favBtn(c,n){let on=false;try{on=(JSON.parse(localStorage.getItem("kafeo-x-favs")||"[]")||[]).some(f=>f.c===c&&f.n===n)}catch(e){}return `<button type="button" class="fav${on?" on":""}" data-fc="${c}" data-fn="${esc(n)}" aria-pressed="${on}" aria-label="${on?"Remove":"Save"} ${esc(n)} ${on?"from":"to"} favourites">${on?"♥":"♡"}</button>`}
 function renderCat(id){
@@ -1824,7 +1826,7 @@ function openCustom(name,price,cat,x,y){
 /* ---------- "goes well with" drink suggestion ---------- */
 const toast=$("#toast");let toastT;
 function suggestDrink(){
- const sg=[["Mint Margarita",325],["Coke / Sprite 345 ml",100],["KAFEO Iced Latte",800],["Crimson Mist",375]];
+ const sg=[["Mint Margarita (S)",325],["Coke / Sprite 345 ml",100],["KAFEO Iced Latte",800],["Crimson Mist (S)",375]];
  toast.innerHTML=`<div class="tt"><b style="font-weight:600">Goes well with a drink?</b><button aria-label="Close" id="tX">×</button></div><div class="sg">${sg.map(([n,p])=>`<button data-n="${esc(n)}" data-p="${p}">+ ${esc(n)} · Rs ${p}</button>`).join("")}</div>`;
  toast.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>toast.hidden=true,7000);
  $("#tX").onclick=()=>toast.hidden=true;
@@ -2237,7 +2239,7 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
  function lineCat(n){if(n.startsWith("Deal: "))return"deal";if(n.startsWith("Custom: "))return"coffee";const k=keys.find(k=>n===k||n.startsWith(k+" ("));return k?catOf[k]:""}
  const DRINKS=["coffee","shakes","mocktails"],MAINS=["pizza","burgers","steak","pasta","sandwich","wings"];
  const SUG={
-  drink:["Thirsty? Add a drink",[["Mint Margarita",325],["Crimson Mist",375],["Coke / Sprite 500 ml",150],["KAFEO Iced Latte",800]]],
+  drink:["Thirsty? Add a drink",[["Mint Margarita (S)",325],["Crimson Mist (S)",375],["Coke / Sprite 500 ml",150],["KAFEO Iced Latte",800]]],
   side:["Make it a meal",[["Plain Fries",299],["Garlic Mayo Fries",399],["Loaded Fries",699]]],
   sweet:["Something sweet to finish?",[["Nutella Brownie",399],["Vanilla Ice Cream",350]]],
   bite:["A bite with your coffee?",[["Belgian Chocolate Brownie",399],["Cheese Sticks (2 pc)",399]]]
