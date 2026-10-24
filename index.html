@@ -1013,6 +1013,71 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .kxhero span{font-size:15px;margin-right:4px}
 .kxhero:hover{border-color:var(--flame)}
 @media (max-width:620px){.kxtop .qhead{flex-direction:column;align-items:flex-start}.kxtop .qhead h3{white-space:nowrap}}
+
+/* ===== More animation (Oct 2026) ===== */
+.kxrot{margin:14px 0 2px;font:500 clamp(15px,1.5vw,18px) var(--f-b);color:var(--crema,#e8d3b5);display:flex;flex-wrap:wrap;gap:6px 8px;align-items:baseline}
+.kxrot .w2{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:3px}
+.kxrw{display:inline-block;color:var(--caramel);font-weight:600;border-bottom:2px solid var(--flame);transition:transform .38s cubic-bezier(.6,0,.3,1),opacity .38s}
+.kxrw.out{transform:translateY(-110%);opacity:0}
+.kxrw.in2{transform:translateY(110%);opacity:0;transition:none}
+.kxst{padding:clamp(48px,7vw,90px) 0}
+.kxst .sh{margin-bottom:26px}
+.kxsg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.kxsg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kxs{border:1px solid var(--hair);border-radius:22px;padding:22px 18px;background:var(--card);opacity:0;transform:translateY(24px);transition:opacity .7s var(--d),transform .7s cubic-bezier(.2,.8,.2,1) var(--d)}
+.kxsg.on .kxs{opacity:1;transform:none}
+.kxs .n{font-family:var(--f-d);font-size:clamp(46px,6vw,76px);line-height:1;color:var(--flame);font-variant-numeric:tabular-nums}
+.kxs .n em{font-style:normal;font-size:.45em;margin-left:4px;color:var(--caramel)}
+.kxs b{display:block;margin-top:10px;font-weight:600;color:var(--milk)}
+.kxs small{color:var(--dim);font-size:13px}
+.kxpr{padding:clamp(40px,6vw,80px) 0 10px}
+.kxproc{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:10px}
+.kxproc svg{position:absolute;left:12.5%;right:12.5%;top:2px;width:75%;height:60px;overflow:visible;pointer-events:none}
+.kxproc svg path{fill:none;stroke:var(--flame);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.6,0,.3,1) .2s}
+.kxproc.on svg path{stroke-dashoffset:0}
+.kxstep{position:relative;text-align:center;opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.kxproc.on .kxstep{opacity:1;transform:none}
+.kxproc.on .kxstep:nth-of-type(1){transition-delay:.15s}.kxproc.on .kxstep:nth-of-type(2){transition-delay:.8s}.kxproc.on .kxstep:nth-of-type(3){transition-delay:1.45s}.kxproc.on .kxstep:nth-of-type(4){transition-delay:2.1s}
+.kxstep .dot{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:26px;background:var(--card);border:2px solid var(--caramel);position:relative;z-index:1;box-shadow:0 0 0 8px var(--night,#120d0b)}
+.kxproc.on .kxstep .dot{animation:kxPop .6s both;animation-delay:inherit}
+.kxstep .no{font:500 11px var(--f-m);letter-spacing:.18em;color:var(--flame);text-transform:uppercase}
+.kxstep b{display:block;margin:4px 0;font-weight:600;font-size:17px;color:var(--milk)}
+.kxstep small{color:var(--dim);font-size:13.5px;line-height:1.45;display:block;max-width:220px;margin:0 auto}
+.kxpline{display:none}
+@keyframes kxPop{0%{transform:scale(.4)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+@media (max-width:760px){
+ .kxproc{grid-template-columns:1fr;gap:22px;padding-left:4px}
+ .kxproc svg{display:none}
+ .kxpline{display:block;position:absolute;left:35px;top:32px;bottom:32px;width:3px;border-radius:3px;background:var(--flame);transform:scaleY(0);transform-origin:top;transition:transform 2.2s cubic-bezier(.6,0,.3,1) .2s}
+ .kxproc.on .kxpline{transform:scaleY(1)}
+ .kxstep{display:grid;grid-template-columns:64px 1fr;gap:4px 16px;text-align:left;align-items:center}
+ .kxstep .dot{grid-row:span 3;margin:0}
+ .kxstep small{margin:0;max-width:none}
+}
+.front .p .rr{display:inline-flex;align-items:flex-end}
+.front .p .rd{display:inline-block;height:1em;overflow:hidden;line-height:1}
+.front .p .rs{display:flex;flex-direction:column;transform:translateY(0);transition:transform 1.6s cubic-bezier(.2,.75,.15,1) var(--dl)}
+.front .p .rs i{font-style:normal;height:1em;line-height:1}
+#dealsG.roll .front .p .rs{transform:translateY(calc(var(--to) * -1em))}
+.front .p .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#kxOk{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:#120d0bcc;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;padding:20px}
+#kxOk[hidden]{display:none}
+#kxOk.on{opacity:1}
+#kxOk .okc{position:relative;width:min(380px,100%);text-align:center;background:var(--roast,#1d130e);border:1.5px solid var(--caramel);border-radius:26px;padding:30px 22px 24px;color:var(--milk);transform:scale(.85);transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+#kxOk.on .okc{transform:none}
+#kxOk svg{width:96px;height:96px;display:block;margin:0 auto 8px}
+#kxOk circle{fill:none;stroke:#3fbf6f;stroke-width:6;stroke-dasharray:320;stroke-dashoffset:320;animation:kxDraw .7s .1s forwards;transform:rotate(-90deg);transform-origin:center}
+#kxOk svg path{fill:none;stroke:#3fbf6f;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:80;stroke-dashoffset:80;animation:kxDraw .45s .7s forwards}
+@keyframes kxDraw{to{stroke-dashoffset:0}}
+#kxOk h3{font-family:var(--f-d);font-weight:400;font-size:40px;margin:4px 0 6px}
+#kxOk p{margin:0 0 8px;color:var(--dim)}
+#kxOk p small{font:500 12px var(--f-m);letter-spacing:.12em;color:var(--flame)}
+#kxOk .okn{font-size:14px;color:var(--milk)}
+#kxOk .btn{margin-top:10px;min-width:140px}
+#kxOk .okb{position:absolute;left:50%;top:78px;width:0;height:0}
+#kxOk .okb i{position:absolute;width:12px;height:16px;margin:-8px 0 0 -6px;border-radius:50%;background:linear-gradient(90deg,#6b3d1f 45%,#2b1a12 50%,#6b3d1f 55%);opacity:0;animation:kxBean 1s cubic-bezier(.2,.7,.3,1) var(--dl) forwards}
+@keyframes kxBean{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.4)}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}}
+@media (prefers-reduced-motion:reduce){.kxs,.kxstep{opacity:1;transform:none;transition:none}.kxproc svg path{stroke-dashoffset:0;transition:none}.kxpline{transform:none;transition:none}#kxOk circle,#kxOk svg path{animation:none;stroke-dashoffset:0}}
 </style>
 </head>
 <body>
@@ -1071,6 +1136,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
       <div class="hero-copy">
         <div class="brand3">KAFEO</div>
         <h1 class="d hero-h" data-i18n="hero.t"><span class="ln"><span>Where coffee,</span></span><span class="ln"><span>food &amp; <i>motivation</i></span></span><span class="ln"><span>meet.</span></span></h1>
+        <div class="kxrot" aria-live="off"><span id="kxRotP">Tonight at KAFEO:</span><span class="w2"><span class="kxrw" id="kxRotW">stone-baked pizza</span></span></div>
         <p class="hero-p" data-i18n="hero.p">KAFEO is Shadman's warm, candle-lit café for barista coffee, stone-baked pizza, loaded burgers, steaks and house mocktails. Dine in, take away, or have KAFEO delivered.</p>
         <div class="hero-cta">
           <a class="btn btn-gold" href="#menu" data-cur="Menu" data-i18n="hero.c1">Explore the KAFEO menu</a>
@@ -1100,6 +1166,9 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   <section id="mani" class="pin" data-pin="mani">
     <div class="stick"><div class="w"><div class="k" style="margin-bottom:22px">Welcome to KAFEO</div><p class="mani-t" id="maniT">KAFEO is where coffee, food and motivation meet. Warm light. Deep sofas. Espresso pulled to order. Pizza from the oven. Stay for one cup, leave with a better day.</p></div></div>
   </section>
+
+  <!-- COUNT-UP STATS -->
+  <section id="kxStats" class="kxst" aria-label="KAFEO in numbers"><div class="w"><div class="sh"><div><div class="k">KAFEO in numbers</div><h2 class="d">Made fresh, <i>every day</i></h2></div></div><div class="kxsg" id="kxStatsG"></div></div></section>
 
   <!-- KAFEO BEEF: COMING SOON -->
   <section id="beef" aria-labelledby="beefT">
@@ -1192,6 +1261,15 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
     </div>
   </section>
   <div class="mq rev" aria-hidden="true"><div class="t" id="mq2"></div></div>
+
+  <!-- HOW TO ORDER (process draw) -->
+  <section id="kxHow" class="kxpr" aria-label="How to order"><div class="w"><div class="sh"><div><div class="k">Ordering is easy</div><h2 class="d">Four taps to <i>KAFEO</i></h2></div></div>
+   <div class="kxproc" id="kxProc"><svg viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 30 C 110 6, 220 54, 333 30 S 556 6, 666 30 S 890 54, 1000 30"/></svg><span class="kxpline" aria-hidden="true"></span>
+    <div class="kxstep"><div class="dot">👆</div><div class="no">Step 1</div><b>Tap + on what you crave</b><small>Pizza, burgers, steaks, coffee, shakes, anything on the menu.</small></div>
+    <div class="kxstep"><div class="dot">🛒</div><div class="no">Step 2</div><b>Send your order</b><small>Choose delivery, takeaway or dine-in, then tap Send.</small></div>
+    <div class="kxstep"><div class="dot">💬</div><div class="no">Step 3</div><b>We confirm on WhatsApp</b><small>KAFEO confirms your total and time straight away.</small></div>
+    <div class="kxstep"><div class="dot">☕</div><div class="no">Step 4</div><b>Enjoy it hot</b><small>At your door, at the counter or at your table.</small></div>
+   </div></div></section>
 
   <!-- MENU -->
   <section id="menu" class="sec">
@@ -1458,6 +1536,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 <div class="mbg" id="wbBg" hidden></div>
 <div class="modal" id="wb" role="dialog" aria-modal="true" aria-labelledby="wbT" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
+<div id="kxOk" hidden></div>
 
 
 <script>
@@ -1733,7 +1812,7 @@ $("#orderForm").addEventListener("submit",e=>{e.preventDefault();const m=$("#oms
  sendPOS(pos).then(r=>{posSent(pos,r);m.textContent=r.ok?`Order ${no} received at the KAFEO counter ✓ Please press Send on WhatsApp to confirm.`:(r.error||"Order sent on WhatsApp.")}).catch(()=>{m.textContent="Order sent on WhatsApp. We'll confirm there."});
  sendEmail({_subject:`New KAFEO website order ${no} · ${type} · ${fmt(tot)}`,"Order no":no,"Order type":type,"Customer name":name||"(not given)","Phone":phone,"Address":type==="Delivery"?addr:"(not delivery)","Location pin":type==="Delivery"&&geo?geo.link:"-","Items":items,"Total":fmt(tot),"Payment":payLabel(type),"Delivery fee":type==="Delivery"?delLabel(tot):"-","Distance (est.)":geoKm()!=null?geoKm().toFixed(1)+" km":"-","Notes":note||"-","Placed at":new Date().toLocaleString("en-PK",{timeZone:"Asia/Karachi"}),"Source":"KAFEO 3.0 site"})
   .catch(()=>{});
- saveLast(no,type,tot,ls,{name,phone,addr});if(typeof kxAfterOrder==="function")kxAfterOrder();openWA(msg);basket={};refresh();
+ saveLast(no,type,tot,ls,{name,phone,addr});if(typeof kxAfterOrder==="function")kxAfterOrder();if(typeof kxSuccess==="function")kxSuccess(no,type,tot);openWA(msg);basket={};refresh();
 });
 
 /* ---------- VIP reservation ---------- */
@@ -2296,6 +2375,60 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
   return b.join(" · ")};
 
  syncType();kxRenderQuick();refresh();
+})();
+
+/* ===================== MORE ANIMATION (Oct 2026) =====================
+   Word rotator · Count-up stats · Process draw · Price roll · Click success
+   Added on top — nothing above was removed. All respect "reduce motion". */
+(function(){
+ const seen=(el,fn,th=.35)=>{if(!el)return;if(!("IntersectionObserver" in window)){fn();return}const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){o.disconnect();fn()}}),{threshold:th});o.observe(el)};
+
+ /* ---------- 1. Word rotator (hero) ---------- */
+ const rw=$("#kxRotW"),rp=$("#kxRotP");
+ if(rw){
+  const h=+new Date().toLocaleString("en-US",{timeZone:"Asia/Karachi",hour:"numeric",hour12:false});
+  if(rp)rp.textContent=h<12&&h>=5?"This morning at KAFEO:":h<17&&h>=5?"This afternoon at KAFEO:":"Tonight at KAFEO:";
+  const W=["stone-baked pizza","iced lattes","loaded burgers","sizzling steaks","house mocktails","karak chai","molten lava burgers"];let i=0;
+  rw.textContent=W[0];
+  if(!RM)setInterval(()=>{if(document.hidden)return;rw.classList.add("out");setTimeout(()=>{i=(i+1)%W.length;rw.textContent=W[i];rw.classList.remove("out");rw.classList.add("in2");requestAnimationFrame(()=>requestAnimationFrame(()=>rw.classList.remove("in2")))},380)},2400);
+ }
+
+ /* ---------- 2. Count-up stats (real numbers only) ---------- */
+ const items=MENU.reduce((a,c)=>a+c.items.length,0);
+ const STATS=[[items,"","dishes & drinks","on the KAFEO menu"],[DEALS.length,"","sharing deals","for one to the whole table"],[DELIV.maxKm,"km","delivery range","from Shadman Chowk"],[50,"%","off your bill","after 5 loyalty stamps"]];
+ const sg=$("#kxStatsG");
+ if(sg){
+  sg.innerHTML=STATS.map(([n,u,b,s],k)=>`<div class="kxs" style="--d:${k*120}ms"><div class="n"><span data-to="${n}">${RM?n:0}</span><em>${u}</em></div><b>${b}</b><small>${s}</small></div>`).join("");
+  seen(sg,()=>{sg.classList.add("on");if(RM)return;sg.querySelectorAll("[data-to]").forEach((el,k)=>{const to=+el.dataset.to,dur=1500+k*150,t0=performance.now()+k*120;
+   const step=t=>{const p=Math.min(1,Math.max(0,(t-t0)/dur)),e=1-Math.pow(1-p,3);el.textContent=Math.round(to*e);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)})});
+ }
+
+ /* ---------- 3. Process draw ---------- */
+ const pr=$("#kxProc");
+ if(pr)seen(pr,()=>pr.classList.add("on"),.3);
+
+ /* ---------- 4. Price roll (deal cards) ---------- */
+ const dg=$("#dealsG");
+ if(dg&&!RM){
+  dg.querySelectorAll(".front .p").forEach(p=>{const sm=p.querySelector("small");const txt=p.textContent.replace(sm?sm.textContent:"","").trim();
+   let k=0;const html=[...txt].map(ch=>{if(!/\d/.test(ch))return `<span class="rc">${ch}</span>`;const d=+ch;k++;
+    return `<span class="rd" aria-hidden="true"><span class="rs" style="--to:${10+d};--dl:${k*90}ms">${"01234567890123456789".split("").map(x=>`<i>${x}</i>`).join("")}</span></span>`}).join("");
+   p.innerHTML=(sm?sm.outerHTML:"")+`<span class="sr">${txt}</span><span class="rr">${html}</span>`;
+  });
+  seen(dg,()=>dg.classList.add("roll"),.2);
+ }
+
+ /* ---------- 5. Click success (after an order is sent) ---------- */
+ const ok=$("#kxOk");let okT;
+ window.kxSuccess=function(no,type,tot){
+  if(!ok)return;
+  const beans=RM?"":Array.from({length:14},(_,j)=>{const a=j/14*Math.PI*2,r=110+Math.random()*60;return `<i style="--x:${Math.cos(a)*r}px;--y:${Math.sin(a)*r}px;--r:${Math.random()*360}deg;--dl:${Math.random()*80}ms"></i>`}).join("");
+  ok.innerHTML=`<div class="okc" role="status" aria-live="assertive"><div class="okb">${beans}</div><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50"/><path d="M38 62l15 15 30-33"/></svg><h3>Order sent!</h3><p>${esc(type||"")} · ${fmt(tot||0)}<br><small>Ref ${esc(no||"")}</small></p><p class="okn">WhatsApp is opening so KAFEO can confirm. Thank you!</p><button type="button" class="btn btn-gold" id="kxOkX">Done</button></div>`;
+  ok.hidden=false;requestAnimationFrame(()=>ok.classList.add("on"));
+  try{navigator.vibrate&&navigator.vibrate([20,40,30])}catch(e){}
+  const close=()=>{ok.classList.remove("on");setTimeout(()=>ok.hidden=true,300)};
+  $("#kxOkX").onclick=close;ok.onclick=e=>{if(e.target===ok)close()};clearTimeout(okT);okT=setTimeout(close,6000);
+ };
 })();
 </script>
 
