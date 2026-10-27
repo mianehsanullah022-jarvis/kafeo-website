@@ -1079,7 +1079,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 @keyframes kxBean{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.4)}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}}
 @media (prefers-reduced-motion:reduce){.kxs,.kxstep{opacity:1;transform:none;transition:none}.kxproc svg path{stroke-dashoffset:0;transition:none}.kxpline{transform:none;transition:none}#kxOk circle,#kxOk svg path{animation:none;stroke-dashoffset:0}}
 
-/* ===== Website launch offer: 10% off every website order (from 1 Nov 2026) ===== */
+/* ===== Website launch offer: 15% off every website order (from 1 Nov 2026) ===== */
 .kxpromo{position:relative;display:flex;align-items:center;gap:14px;margin:0 0 22px;padding:12px 16px 12px 12px;border-radius:20px;text-decoration:none;color:var(--milk,#f6ecdc);background:linear-gradient(120deg,#2b1a12f2,#1d130ef2);border:1.5px solid var(--caramel);max-width:560px;overflow:hidden;box-shadow:0 18px 40px -22px #ff7a2f}
 .kxpromo::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(90deg,transparent,#ffffff2e,transparent);transform:skewX(-20deg);animation:kxShine 4.5s ease-in-out infinite}
 @keyframes kxShine{0%,60%{left:-80px}100%{left:110%}}
@@ -1153,7 +1153,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
     <canvas id="beans" aria-hidden="true"></canvas>
     <div class="w hero3">
       <div class="hero-copy">
-        <a class="kxpromo" href="#menu" id="kxPromo"><span class="pc">10%<small>OFF</small></span><span class="pt"><b id="kxPromoT">Website launch · from 1 November</b><span>10% off every order you place on this website. Delivery, takeaway or dine-in, even from your table in the hall.</span></span><span class="pa">Order now →</span></a>
+        <a class="kxpromo" href="#menu" id="kxPromo"><span class="pc">15%<small>OFF</small></span><span class="pt"><b id="kxPromoT">Website launch · from 1 November</b><span>15% off every order you place on this website. Delivery, takeaway or dine-in, even from your table in the hall.</span></span><span class="pa">Order now →</span></a>
         <div class="brand3">KAFEO</div>
         <h1 class="d hero-h" data-i18n="hero.t"><span class="ln"><span>Where coffee,</span></span><span class="ln"><span>food &amp; <i>motivation</i></span></span><span class="ln"><span>meet.</span></span></h1>
         <div class="kxrot" aria-live="off"><span id="kxRotP">Tonight at KAFEO:</span><span class="w2"><span class="kxrw" id="kxRotW">stone-baked pizza</span></span></div>
@@ -1594,7 +1594,7 @@ const DEALS=[
 const fmt=n=>"Rs "+n.toLocaleString("en-US");
 /* Website launch offer — keep in step with WEB_PROMO in the POS web-order function */
 /* DRAFT: live:false keeps the offer hidden on the real site. Switch to live:true (here AND in the POS function) only when the owner says so. preview.html shows it for review. */
-const WEB_PROMO={live:false,start:Date.parse("2026-11-01T00:00:00+05:00"),pct:10};
+const WEB_PROMO={live:false,start:Date.parse("2026-11-01T00:00:00+05:00"),pct:15};
 const promoOn=()=>WEB_PROMO.live?(window.__kxNow||Date.now())>=WEB_PROMO.start:!!window.__kxPreview;
 const promoShown=()=>WEB_PROMO.live||!!window.__kxPreview;
 const promoDisc=sub=>promoOn()?Math.round(sub*WEB_PROMO.pct/100):0;
@@ -1709,7 +1709,7 @@ $$("[data-r]").forEach(el=>io.observe(el));
   if(!RM)requestAnimationFrame(frame)}
  frame();
  new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(cv);
- const hero=$("#hero"),gl=$("#gl");
+ const hero=$("#hero"),gl=$("#gl")||document.createElement("div");
  hero.addEventListener("pointermove",e=>{const r=cv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;
   if(!RM){const nx=e.clientX/innerWidth-.5,ny=e.clientY/innerHeight-.5;gl.style.transform=`rotateY(${nx*16}deg) rotateX(${-ny*12}deg) translateZ(20px)`}});
  hero.addEventListener("pointerleave",()=>{mx=my=-999;gl.style.transform=""});
@@ -1768,7 +1768,7 @@ function refresh(){
  fabc.hidden=!cnt;fabc.textContent=cnt;
  $("#lines").innerHTML=ls.length?Object.entries(basket).map(([k,l])=>`<div class="line"><div class="nm"><b style="font-weight:500">${esc(l.name)}</b><br><span class="price">${fmt(l.price)}</span></div><div class="qty"><button data-k="${esc(k)}" data-d="-1" aria-label="Fewer">−</button><span>${l.qty}</span><button data-k="${esc(k)}" data-d="1" aria-label="More">+</button></div></div>`).join(""):`<p class="empty">Your order is empty. Tap + on anything you crave.</p>`;
  const _d=promoDisc(tot);$("#total").textContent=fmt(tot-_d);
- const kd=$("#kxDisc");if(kd){if(!promoShown()){kd.hidden=true}else if(!promoOn()){kd.innerHTML=`<div class="r tz"><span>🎉 From <b>1 November</b>: 10% off every website order</span></div>`;kd.hidden=!cnt}else if(cnt){kd.innerHTML=`<div class="r"><span>Subtotal</span><span>${fmt(tot)}</span></div><div class="r off"><span>🎉 Website order 10% off</span><span>− ${fmt(_d)}</span></div>`;kd.hidden=false}else kd.hidden=true}
+ const kd=$("#kxDisc");if(kd){if(!promoShown()){kd.hidden=true}else if(!promoOn()){kd.innerHTML=`<div class="r tz"><span>🎉 From <b>1 November</b>: ${WEB_PROMO.pct}% off every website order</span></div>`;kd.hidden=!cnt}else if(cnt){kd.innerHTML=`<div class="r"><span>Subtotal</span><span>${fmt(tot)}</span></div><div class="r off"><span>🎉 Website order ${WEB_PROMO.pct}% off</span><span>− ${fmt(_d)}</span></div>`;kd.hidden=false}else kd.hidden=true}
  mark();try{localStorage.setItem("kafeo-x-basket",JSON.stringify(basket))}catch(e){}
  if(typeof kxAfterRefresh==="function")kxAfterRefresh();
 }
@@ -1816,12 +1816,12 @@ $("#orderForm").addEventListener("submit",e=>{e.preventDefault();const m=$("#oms
  if(type==="Delivery"){const t0=ls.reduce((a,l)=>a+l.qty*l.price,0);if(t0<DELIV.minOrder){m.textContent=`Delivery needs a minimum order of ${fmt(DELIV.minOrder)}. Add ${fmt(DELIV.minOrder-t0)} more, or choose Takeaway.`;return}const k0=geoKm();if(k0!=null&&verdict(k0)==="no"){m.textContent="Your location is outside our delivery area. Please choose Takeaway or Dine-in.";return}}
  const tot=ls.reduce((a,l)=>a+l.qty*l.price,0),items=ls.map(l=>`• ${l.qty} × ${l.name} — ${fmt(l.qty*l.price)}`).join("\n"),no="KF-"+Date.now().toString(36).toUpperCase().slice(-6)+Math.random().toString(36).slice(2,5).toUpperCase().replace(/[^A-Z0-9]/g,"X").padEnd(3,"X");
  const disc=promoDisc(tot),pay=tot-disc;
- let msg=`Assalam o Alaikum KAFEO! I'd like to order (${type}):\n\n${items}\n\n`+(disc?`Subtotal: ${fmt(tot)}\nWebsite order 10% off: -${fmt(disc)}\nTotal to pay: ${fmt(pay)}`:`Total: ${fmt(tot)}`);if(name)msg+=`\nName: ${name}`;msg+=`\nPhone: ${phone}`;if(type==="Delivery"&&addr)msg+=`\nAddress: ${addr}`;if(type==="Delivery"&&geo)msg+=`\nLocation pin: ${geo.link}`;if(note)msg+=`\nNotes: ${note}`;msg+=`\nPayment: ${payLabel(type)}`;if(type==="Delivery")msg+=`\nDelivery: ${delLabel(tot)}`;msg+=`\nOrder ref: ${no}`;
+ let msg=`Assalam o Alaikum KAFEO! I'd like to order (${type}):\n\n${items}\n\n`+(disc?`Subtotal: ${fmt(tot)}\nWebsite order ${WEB_PROMO.pct}% off: -${fmt(disc)}\nTotal to pay: ${fmt(pay)}`:`Total: ${fmt(tot)}`);if(name)msg+=`\nName: ${name}`;msg+=`\nPhone: ${phone}`;if(type==="Delivery"&&addr)msg+=`\nAddress: ${addr}`;if(type==="Delivery"&&geo)msg+=`\nLocation pin: ${geo.link}`;if(note)msg+=`\nNotes: ${note}`;msg+=`\nPayment: ${payLabel(type)}`;if(type==="Delivery")msg+=`\nDelivery: ${delLabel(tot)}`;msg+=`\nOrder ref: ${no}`;
  m.textContent="Sending your order to KAFEO…";
  const km=geoKm(),pos={ref:no,type,name,phone,address:type==="Delivery"?addr:"",note,payment:payLabel(type),delivery:type==="Delivery"?delLabel(tot):"",geo:type==="Delivery"&&geo?{lat:geo.lat,lng:geo.lng}:null,distance_km:km!=null?+km.toFixed(1):null,items:ls.map(l=>({name:l.name,price:l.price,qty:l.qty})),total:tot,discount:disc,website:($("#ohp")||{}).value||"",at:Date.now()};
  setOutbox(outbox().filter(x=>x.ref!==no).concat([pos]));
  sendPOS(pos).then(r=>{posSent(pos,r);m.textContent=r.ok?`Order ${no} received at the KAFEO counter ✓ Please press Send on WhatsApp to confirm.`:(r.error||"Order sent on WhatsApp.")}).catch(()=>{m.textContent="Order sent on WhatsApp. We'll confirm there."});
- sendEmail({_subject:`New KAFEO website order ${no} · ${type} · ${fmt(pay)}`+(disc?" (10% off)":""),"Order no":no,"Order type":type,"Customer name":name||"(not given)","Phone":phone,"Address":type==="Delivery"?addr:"(not delivery)","Location pin":type==="Delivery"&&geo?geo.link:"-","Items":items,"Subtotal":fmt(tot),"Website 10% off":disc?"- "+fmt(disc):"-","Total to pay":fmt(pay),"Payment":payLabel(type),"Delivery fee":type==="Delivery"?delLabel(tot):"-","Distance (est.)":geoKm()!=null?geoKm().toFixed(1)+" km":"-","Notes":note||"-","Placed at":new Date().toLocaleString("en-PK",{timeZone:"Asia/Karachi"}),"Source":"KAFEO 3.0 site"})
+ sendEmail({_subject:`New KAFEO website order ${no} · ${type} · ${fmt(pay)}`+(disc?` (${WEB_PROMO.pct}% off)`:""),"Order no":no,"Order type":type,"Customer name":name||"(not given)","Phone":phone,"Address":type==="Delivery"?addr:"(not delivery)","Location pin":type==="Delivery"&&geo?geo.link:"-","Items":items,"Subtotal":fmt(tot),"Website discount":disc?"- "+fmt(disc):"-","Total to pay":fmt(pay),"Payment":payLabel(type),"Delivery fee":type==="Delivery"?delLabel(tot):"-","Distance (est.)":geoKm()!=null?geoKm().toFixed(1)+" km":"-","Notes":note||"-","Placed at":new Date().toLocaleString("en-PK",{timeZone:"Asia/Karachi"}),"Source":"KAFEO 3.0 site"})
   .catch(()=>{});
  saveLast(no,type,tot,ls,{name,phone,addr});if(typeof kxAfterOrder==="function")kxAfterOrder();if(typeof kxSuccess==="function")kxSuccess(no,type,pay);openWA(msg);basket={};refresh();
 });
@@ -2034,7 +2034,7 @@ $("#sndBtn").onclick=()=>{const on=SND.toggle();const b=$("#sndBtn");b.classList
 
 /* ---------- phone tilt ---------- */
 (function(){
- if(FINE||RM)return;const gl=$("#gl");let asked=false;
+ if(FINE||RM)return;const gl=$("#gl")||document.createElement("div");let asked=false;
  function onTilt(e){const gx=clamp((e.gamma||0)/30,-1,1),gy=clamp(((e.beta||45)-45)/30,-1,1);window.__tiltX=gx*4;gl.style.transform=`rotateY(${gx*14}deg) rotateX(${-gy*10}deg)`}
  function ask(){if(asked)return;asked=true;const D=window.DeviceOrientationEvent;
   if(D&&typeof D.requestPermission==="function")D.requestPermission().then(r=>{if(r==="granted")addEventListener("deviceorientation",onTilt)}).catch(()=>{});

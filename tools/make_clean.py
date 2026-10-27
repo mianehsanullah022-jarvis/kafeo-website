@@ -110,7 +110,7 @@ POP_HTML = """<div id="kxOffer" hidden role="dialog" aria-modal="true" aria-labe
     <button type="button" class="x" id="kxOfferX" aria-label="Close">×</button>
     <div class="fx" id="kxOfferFx" aria-hidden="true"></div>
     <div class="tag">Website launch offer</div>
-    <div class="big" aria-label="10 percent off"><b id="kxOfferN">0</b><i>%</i><span class="stamp">OFF</span></div>
+    <div class="big" aria-label="15 percent off"><b id="kxOfferN">0</b><i>%</i><span class="stamp">OFF</span></div>
     <h3 id="kxOfferT">On every website order</h3>
     <p>No code needed. It comes off in your basket.</p>
     <div class="chips"><span>Delivery</span><span>Takeaway</span><span>Dine-in</span><span>From your table</span></div>
@@ -130,7 +130,7 @@ POP_JS = r"""
  if(wb){new MutationObserver(()=>{if(isOpen&&!wb.hidden){wb.hidden=true;if(wbBg)wbBg.hidden=true;wbWaiting=true}}).observe(wb,{attributes:true,attributeFilter:["hidden"]})}
  function confetti(){const fx=$("#kxOfferFx");if(!fx||RM)return;const C=["#e3a35a","#ff7a2f","#f6ecdc","#6b3d1f"];
   fx.innerHTML=Array.from({length:34},(_,i)=>{const a=Math.random()*Math.PI*2,r=120+Math.random()*170;return `<i style="background:${C[i%4]};--x:${Math.cos(a)*r}px;--y:${Math.sin(a)*r-60}px;--r:${Math.random()*720-360}deg;--d:${.75+Math.random()*.25}s"></i>`}).join("")}
- function count(){const n=$("#kxOfferN");if(RM){n.textContent="10";return}const t0=performance.now()+350;const step=t=>{const p=Math.min(1,Math.max(0,(t-t0)/700)),e=1-Math.pow(1-p,3);n.textContent=Math.round(10*e);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+ function count(){const n=$("#kxOfferN");if(RM){n.textContent=String(WEB_PROMO.pct);return}const t0=performance.now()+350;const step=t=>{const p=Math.min(1,Math.max(0,(t-t0)/700)),e=1-Math.pow(1-p,3);n.textContent=Math.round(WEB_PROMO.pct*e);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
  function open(){isOpen=true;box.hidden=false;requestAnimationFrame(()=>box.classList.add("on"));count();confetti();try{sessionStorage.setItem("kafeo-x-offer","1")}catch(e){}setTimeout(()=>$("#kxOfferGo").focus(),400)}
  function close(go){box.classList.remove("on");setTimeout(()=>{box.hidden=true;isOpen=false;if(go){inkTo($("#menu"))}else if(wbWaiting&&wb){wb.hidden=false;if(wbBg)wbBg.hidden=false}},350)}
  $("#kxOfferX").onclick=()=>close(false);$("#kxOfferL").onclick=()=>close(false);$("#kxOfferGo").onclick=()=>close(true);
