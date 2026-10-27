@@ -1597,8 +1597,10 @@ const DEALS=[
 ];
 const fmt=n=>"Rs "+n.toLocaleString("en-US");
 /* Website launch offer — keep in step with WEB_PROMO in the POS web-order function */
-const WEB_PROMO={start:Date.parse("2026-11-01T00:00:00+05:00"),pct:10};
-const promoOn=()=>(window.__kxNow||Date.now())>=WEB_PROMO.start;
+/* DRAFT: live:false keeps the offer hidden on the real site. Switch to live:true (here AND in the POS function) only when the owner says so. preview.html shows it for review. */
+const WEB_PROMO={live:false,start:Date.parse("2026-11-01T00:00:00+05:00"),pct:10};
+const promoOn=()=>WEB_PROMO.live?(window.__kxNow||Date.now())>=WEB_PROMO.start:!!window.__kxPreview;
+const promoShown=()=>WEB_PROMO.live||!!window.__kxPreview;
 const promoDisc=sub=>promoOn()?Math.round(sub*WEB_PROMO.pct/100):0;
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1770,7 +1772,7 @@ function refresh(){
  fabc.hidden=!cnt;fabc.textContent=cnt;
  $("#lines").innerHTML=ls.length?Object.entries(basket).map(([k,l])=>`<div class="line"><div class="nm"><b style="font-weight:500">${esc(l.name)}</b><br><span class="price">${fmt(l.price)}</span></div><div class="qty"><button data-k="${esc(k)}" data-d="-1" aria-label="Fewer">−</button><span>${l.qty}</span><button data-k="${esc(k)}" data-d="1" aria-label="More">+</button></div></div>`).join(""):`<p class="empty">Your order is empty. Tap + on anything you crave.</p>`;
  const _d=promoDisc(tot);$("#total").textContent=fmt(tot-_d);
- const kd=$("#kxDisc");if(kd){if(!promoOn()){kd.innerHTML=`<div class="r tz"><span>🎉 From <b>1 November</b>: 10% off every website order</span></div>`;kd.hidden=!cnt}else if(cnt){kd.innerHTML=`<div class="r"><span>Subtotal</span><span>${fmt(tot)}</span></div><div class="r off"><span>🎉 Website order 10% off</span><span>− ${fmt(_d)}</span></div>`;kd.hidden=false}else kd.hidden=true}
+ const kd=$("#kxDisc");if(kd){if(!promoShown()){kd.hidden=true}else if(!promoOn()){kd.innerHTML=`<div class="r tz"><span>🎉 From <b>1 November</b>: 10% off every website order</span></div>`;kd.hidden=!cnt}else if(cnt){kd.innerHTML=`<div class="r"><span>Subtotal</span><span>${fmt(tot)}</span></div><div class="r off"><span>🎉 Website order 10% off</span><span>− ${fmt(_d)}</span></div>`;kd.hidden=false}else kd.hidden=true}
  mark();try{localStorage.setItem("kafeo-x-basket",JSON.stringify(basket))}catch(e){}
  if(typeof kxAfterRefresh==="function")kxAfterRefresh();
 }
@@ -2446,7 +2448,7 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
 })();
 
 /* website launch offer banner */
-(function(){const t=$("#kxPromoT");if(t&&promoOn())t.textContent="Now live · website launch offer"})();
+(function(){const b=$("#kxPromo");if(b&&!promoShown()){b.remove();return}const t=$("#kxPromoT");if(t&&promoOn())t.textContent="Now live · website launch offer"})();
 </script>
 
 </body>
