@@ -46,6 +46,8 @@ s = re.sub(r'\s*<a class="kxhero" href="#quickTop">.*?</a>', "", s, count=1, fla
 s = re.sub(r'\s*<p class="hero-p" data-i18n="hero.p">.*?</p>', "", s, count=1, flags=re.S)
 rep('<a href="#quickTop" class="kxnav">⚡ Quick order</a>', "")
 
+s = re.sub(r'\s*<aside class="launch soon" id="gl".*?</aside>', "", s, count=1, flags=re.S)   # beef card under the cup
+
 # ---- 3. shorter copy everywhere
 rep("A juicy beef burger and two premium beef steaks are on the way. Our kitchen is still perfecting every recipe, so they're not on the menu just yet.",
     "A beef burger and two beef steaks. Coming soon.")
