@@ -140,6 +140,23 @@ import re as _re
 for _old in ["oc","oi","x","tag","big","stamp","chips","perf","go","later","fx"]:
     POP_CSS = _re.sub(r"\.%s(?![\w-])" % _old, ".kxo-" + _old, POP_CSS)
     POP_HTML = _re.sub(r'class="%s"' % _old, 'class="kxo-%s"' % _old, POP_HTML)
+WHITE_CSS = r"""
+/* ===== White sections (owner asked for more white) ===== */
+#kxHow,#menu,#deals,#story{--night:#fffaf3;--roast:#ffffff;--card:#ffffff;--bark:#f4ebdf;--hair:#e9dccb;--milk:#2b1a12;--crema:#7a4a2a;--dim:#6f5a49;--flame:#b5530f;--pricec:#b5530f;--caramel:#c27a2c;background:#fffaf3!important;color:#2b1a12;color-scheme:light}
+#kxHow h2,#menu h2,#deals h2,#story h2{color:#2b1a12}
+#kxHow .kxstep .dot{background:#fff;box-shadow:0 0 0 8px #fffaf3}
+#menu .it{border-bottom-color:#e9dccb}
+#menu .search input{background:#fff;color:#2b1a12;border-color:#e9dccb}
+#menu .chip[aria-selected="true"]{background:#2b1a12;border-color:#2b1a12;color:#fff;box-shadow:none}
+#menu .qcard{background:#fff3e4}
+#deals .back{background:#fff;color:#2b1a12}
+#story .stamp3{box-shadow:0 30px 60px -30px #2b1a1255}
+#story .stamp3{--night:#140d0a;--roast:#1d130e;--card:#241812;--bark:#2c1d15;--hair:#3d2b21;--milk:#f6ecdc;--crema:#d9b88f;--dim:#b39b85;--flame:#ff9a57;--caramel:#e3a35a;color:#f6ecdc}
+#story .pillars3 b{color:#2b1a12}
+#story .pillars3 span{color:#6f5a49}
+"""
+s_white_marker = True
+POP_CSS = WHITE_CSS + POP_CSS
 i = s.rfind("</style>", 0, s.find("<body"))
 s = s[:i] + POP_CSS + s[i:]
 rep('<div id="kxOk" hidden></div>', '<div id="kxOk" hidden></div>\n' + POP_HTML)
