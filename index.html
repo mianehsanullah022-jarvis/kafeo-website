@@ -1032,8 +1032,8 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .kxs small{color:var(--dim);font-size:13px}
 .kxpr{padding:clamp(40px,6vw,80px) 0 10px}
 .kxproc{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:10px}
-.kxproc svg{position:absolute;left:12.5%;right:12.5%;top:2px;width:75%;height:60px;overflow:visible;pointer-events:none}
-.kxproc svg path{fill:none;stroke:var(--flame);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.6,0,.3,1) .2s}
+.kxproc>svg{position:absolute;left:12.5%;right:12.5%;top:2px;width:75%;height:60px;overflow:visible;pointer-events:none}
+.kxproc>svg path{fill:none;stroke:var(--flame);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.6,0,.3,1) .2s}
 .kxproc.on svg path{stroke-dashoffset:0}
 .kxstep{position:relative;text-align:center;opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}
 .kxproc.on .kxstep{opacity:1;transform:none}
@@ -1047,7 +1047,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 @keyframes kxPop{0%{transform:scale(.4)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
 @media (max-width:760px){
  .kxproc{grid-template-columns:1fr;gap:22px;padding-left:4px}
- .kxproc svg{display:none}
+ .kxproc>svg{display:none}
  .kxpline{display:block;position:absolute;left:35px;top:32px;bottom:32px;width:3px;border-radius:3px;background:var(--flame);transform:scaleY(0);transform-origin:top;transition:transform 2.2s cubic-bezier(.6,0,.3,1) .2s}
  .kxproc.on .kxpline{transform:scaleY(1)}
  .kxstep{display:grid;grid-template-columns:64px 1fr;gap:4px 16px;text-align:left;align-items:center}
@@ -1077,7 +1077,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 #kxOk .okb{position:absolute;left:50%;top:78px;width:0;height:0}
 #kxOk .okb i{position:absolute;width:12px;height:16px;margin:-8px 0 0 -6px;border-radius:50%;background:linear-gradient(90deg,#6b3d1f 45%,#2b1a12 50%,#6b3d1f 55%);opacity:0;animation:kxBean 1s cubic-bezier(.2,.7,.3,1) var(--dl) forwards}
 @keyframes kxBean{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.4)}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}}
-@media (prefers-reduced-motion:reduce){.kxs,.kxstep{opacity:1;transform:none;transition:none}.kxproc svg path{stroke-dashoffset:0;transition:none}.kxpline{transform:none;transition:none}#kxOk circle,#kxOk svg path{animation:none;stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.kxs,.kxstep{opacity:1;transform:none;transition:none}.kxproc>svg path{stroke-dashoffset:0;transition:none}.kxpline{transform:none;transition:none}#kxOk circle,#kxOk svg path{animation:none;stroke-dashoffset:0}}
 
 /* ===== Website launch offer: 15% off every website order (from 1 Nov 2026) ===== */
 .kxpromo{position:relative;display:flex;align-items:center;gap:14px;margin:0 0 22px;padding:12px 16px 12px 12px;border-radius:20px;text-decoration:none;color:var(--milk,#f6ecdc);background:linear-gradient(120deg,#2b1a12f2,#1d130ef2);border:1.5px solid var(--caramel);max-width:560px;overflow:hidden;box-shadow:0 18px 40px -22px #ff7a2f}
@@ -1102,6 +1102,8 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 #kxStats,#build,#kxHow,#deals,#deliver,#story,#gallery{--night:#fffaf3;--roast:#ffffff;--card:#ffffff;--bark:#f4ebdf;--hair:#e9dccb;--milk:#2b1a12;--crema:#7a4a2a;--dim:#6f5a49;--flame:#b5530f;--pricec:#b5530f;--caramel:#c27a2c;background:#fffaf3!important;color:#2b1a12;color-scheme:light}
 #kxStats h2,#build h2,#kxHow h2,#deals h2,#deliver h2,#story h2,#gallery h2{color:#2b1a12}
 #kxHow .kxstep .dot{background:#fff;box-shadow:0 0 0 8px #fffaf3}
+.kxstep .dot svg{width:34px;height:34px;fill:none;stroke:var(--flame,#ff7a2f);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
 #deals .back{background:#fff;color:#2b1a12}
 #story .stamp3{box-shadow:0 30px 60px -30px #2b1a1255}
 #story .stamp3{--night:#140d0a;--roast:#1d130e;--card:#241812;--bark:#2c1d15;--hair:#3d2b21;--milk:#f6ecdc;--crema:#d9b88f;--dim:#b39b85;--flame:#ff9a57;--caramel:#e3a35a;color:#f6ecdc}
@@ -1148,8 +1150,8 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 @keyframes kxGlow{70%{box-shadow:0 0 0 16px #ff7a2f00}100%{box-shadow:0 0 0 0 #ff7a2f00}}
 #kxOffer .kxo-later{margin-top:10px;background:none;border:0;color:#d9b88f;font-size:13px;cursor:pointer;padding:8px}
 #kxOffer .kxo-fx{position:absolute;left:50%;top:38%;width:0;height:0;pointer-events:none}
-#kxOffer .kxo-fx i{position:absolute;width:9px;height:14px;border-radius:2px;opacity:0;animation:kxPop 1.3s cubic-bezier(.15,.7,.3,1) var(--d) forwards}
-@keyframes kxPop{0%{opacity:1;transform:translate(0,0) rotate(0)}80%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r))}}
+#kxOffer .kxo-fx i{position:absolute;width:9px;height:14px;border-radius:2px;opacity:0;animation:kxConfetti 1.3s cubic-bezier(.15,.7,.3,1) var(--d) forwards}
+@keyframes kxConfetti{0%{opacity:1;transform:translate(0,0) rotate(0)}80%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r))}}
 @media (prefers-reduced-motion:reduce){#kxOffer .kxo-oc,#kxOffer .kxo-oi::after,#kxOffer .kxo-big b,#kxOffer .kxo-go{animation:none}#kxOffer .kxo-stamp,#kxOffer .kxo-chips span{opacity:1;transform:rotate(-14deg)}#kxOffer .kxo-chips span{transform:none}}
 </style>
 </head>
@@ -1290,10 +1292,10 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   <!-- HOW TO ORDER (process draw) -->
   <section id="kxHow" class="kxpr" aria-label="How to order"><div class="w"><div class="sh"><div><div class="k">Ordering is easy</div><h2 class="d">Four taps to <i>KAFEO</i></h2></div></div>
    <div class="kxproc" id="kxProc"><svg viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 30 C 110 6, 220 54, 333 30 S 556 6, 666 30 S 890 54, 1000 30"/></svg><span class="kxpline" aria-hidden="true"></span>
-    <div class="kxstep"><div class="dot">👆</div><div class="no">Step 1</div><b>Tap + on what you crave</b><small>Pizza, burgers, steaks, coffee, shakes, anything on the menu.</small></div>
-    <div class="kxstep"><div class="dot">🛒</div><div class="no">Step 2</div><b>Send your order</b><small>Choose delivery, takeaway or dine-in, then tap Send.</small></div>
-    <div class="kxstep"><div class="dot">💬</div><div class="no">Step 3</div><b>We confirm on WhatsApp</b><small>KAFEO confirms your total and time straight away.</small></div>
-    <div class="kxstep"><div class="dot">☕</div><div class="no">Step 4</div><b>Enjoy it hot</b><small>At your door, at the counter or at your table.</small></div>
+    <div class="kxstep"><div class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M12 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M15 11.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-4.6-2.2L4 16a1.5 1.5 0 0 1 2.3-2L9 16"/><path d="M19 3v4M17 5h4"/></svg></div><div class="no">Step 1</div><b>Tap + on what you crave</b><small>Pizza, burgers, steaks, coffee, shakes, anything on the menu.</small></div>
+    <div class="kxstep"><div class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.2A2 2 0 0 1 15.8 21H8.2a2 2 0 0 1-2-1.8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="m10 14 2 2 3-4"/></svg></div><div class="no">Step 2</div><b>Send your order</b><small>Choose delivery, takeaway or dine-in, then tap Send.</small></div>
+    <div class="kxstep"><div class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4h0A2.5 2.5 0 0 1 4 13.5Z"/><path d="m8.5 9.5 2.2 2.2 4.8-4.7"/></svg></div><div class="no">Step 3</div><b>We confirm on WhatsApp</b><small>KAFEO confirms your total and time straight away.</small></div>
+    <div class="kxstep"><div class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10h11v4a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5Z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H15.5"/><path d="M4 21h13"/><path d="M8.5 3c-1 1.3 1 2 0 3.5M11.5 3c-1 1.3 1 2 0 3.5"/></svg></div><div class="no">Step 4</div><b>Enjoy it hot</b><small>At your door, at the counter or at your table.</small></div>
    </div></div></section>
 
   <!-- MENU -->
