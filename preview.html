@@ -1329,7 +1329,7 @@ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
           <label class="fl">Pizza<select id="pzFlav"></select></label>
           <div><div class="fl" style="margin-bottom:8px">Size</div><div class="seg3" id="pzSize"><button aria-pressed="false" data-s="0">Small</button><button aria-pressed="true" data-s="1">Medium</button><button aria-pressed="false" data-s="2">Large</button></div></div>
           <div><div class="fl" style="margin-bottom:8px">Extra toppings</div><div class="tops" id="pzTops"></div></div>
-          <div style="display:flex;align-items:end;gap:18px;flex-wrap:wrap;margin-top:6px"><div><div class="k">Your pizza</div><div class="ptot" id="pzTot">Rs 1,549</div></div><button class="btn btn-gold" id="pzAdd">Add pizza to order</button></div>
+          <div style="display:flex;align-items:end;gap:18px;flex-wrap:wrap;margin-top:6px"><div><div class="k">Your pizza</div><div class="ptot" id="pzTot">Rs 1,649</div></div><button class="btn btn-gold" id="pzAdd">Add pizza to order</button></div>
           <div class="bmsg" id="pzMsg" role="status" aria-live="polite"></div>
         </div>
         <svg id="pz" viewBox="0 0 300 300" role="img" aria-label="Your pizza">
@@ -1605,28 +1605,28 @@ function pic(cat,n){
 }
 const MENU = [
  {id:"pizza",name:"Pizza",sub:"Small · Medium · Large",sized:true,items:[
-  ["Kafeo Special",[999,1549,2399]],["Supreme",[899,1449,2249]],["Peri Peri",[849,1349,2149]],["Malai Boti",[749,1299,1999]],["Tikka",[699,1149,1899]],["Fajita",[699,1149,1899]],["Sausages",[649,1099,1699]],["Cheese Lover",[649,1099,1699]],["Veggies Lover",[649,1099,1699]]],
-  note:"<b>Extra toppings (S / M / L):</b> cheese or chicken Rs 70 / 130 / 200 · sausage Rs 40 / 80 / 120"},
- {id:"burgers",name:"Burgers",items:[["Molten Lava Burger",1099,"KAFEO signature"],["Steak Burger",749],["Out of Control Burger",949],["Swiss Mushroom Burger",680],["Fiery Fillet Burger",599],["Zinger Burger",549],["Hot & Crispy Burger",499],["Patty Burger",399]],
-  note:"<b>Add-ons:</b> cheese slice Rs 70 · olives or jalapeño Rs 50 · mushrooms Rs 70 · chicken patty Rs 200 · chicken fillet Rs 180"},
- {id:"steak",name:"Steaks",items:[["Mushroom Steak",1349],["Jalapeño Steak",1249],["Mexican Steak",1199],["BBQ Steak",1099],["Black Pepper Steak",1099]]},
- {id:"pasta",name:"Pasta",items:[["Baked Mushroom Pasta",1099],["Red Sauce Pasta",1099],["Alfredo",999]]},
- {id:"sandwich",name:"Sandwiches & Wraps",items:[["Cheese Lover Sandwich",799],["Cocktail Sandwich",774],["Club Sandwich",749],["Grilled Chicken Sandwich",674],["Grilled Chicken Wrap",674],["Cheese Wrap",674],["Crunchy Wrap",549]]},
- {id:"sides",name:"Fries & Sides",items:[["Loaded Fries",699,"KAFEO signature"],["Masala Fries",299],["Pizza Fries",749],["Jalapeño Cheese Fries",599],["Mayo Cheese Fries",599],["Garlic Mayo Fries",399],["Plain Fries",299],["Chicken Strips (4 pc)",449],["Cheese Sticks (2 pc)",399],["Nuggets (5 pc)",399],["Onion Rings (6 pc)",249]],
-  note:"<b>Sauces:</b> burger, BBQ, garlic mayo, creamy mayo or chipotle Rs 70 each · honey mustard Rs 70 · peri peri Rs 90"},
- {id:"wings",name:"Wings",items:[["Baked Wings (6 pc)",449],["Crispy Wings (6 pc)",449],["Honey Wings (5 pc)",449],["BBQ Wings (5 pc)",449]]},
- {id:"coffee",name:"Coffee & Tea",items:[["Caramel Cloud Latte (iced)",800,"New"],["Chocolate Velvet Latte (iced)",800,"New"],["KAFEO Iced Latte",800,"New"],["Latte",399],["Cappuccino",349],["Espresso",245],["Long Black",245],["Kashmiri Chai",320],["Cardamom Tea",299],["Karak Chai",280],["Mix Karak",280],["Mix Cardamom",300],["Green Tea",150]]},
- {id:"shakes",name:"Cold Coffee & Shakes",sizes:"S · L",items:[["Caramel Cold Coffee",[649,800]],["Oreo Cold Coffee",[599,800]],["Lotus Coffee",[null,950],"Large only"],["KitKat Shake",[649,950]],["Oreo Shake",[549,800]],["Vanilla Shake",[499,700]],["Chocolate Shake",[499,700]],["Strawberry Shake",[499,700]],["Lotus Shake",[null,900],"Large only"]],
+  ["Kafeo Special",[1100,1649,2549]],["Supreme",[1049,1599,2399]],["Peri Peri",[999,1499,2249]],["Malai Boti",[849,1449,2149]],["Tikka",[799,1249,1999]],["Fajita",[799,1249,1999]],["Sausages",[699,1149,1749]],["Cheese Lover",[699,1099,1599]],["Veggies Lover",[749,1199,1649]]],
+  note:"<b>Extra toppings (S / M / L):</b> cheese Rs 80 / 150 / 220 · chicken Rs 90 / 150 / 220 · sausage Rs 50 / 90 / 130"},
+ {id:"burgers",name:"Burgers",items:[["Molten Lava Burger",1099,"KAFEO signature"],["Steak Burger",849],["Out of Control Burger",999],["Swiss Mushroom Burger",849],["Fiery Fillet Burger",699],["Zinger Burger",599],["Hot & Crispy Burger",599],["Patty Burger",474],["Smoky Beef Burger",1049,"New · beef"],["Smoke House Beef Burger",1249,"New · beef"],["Double Smoky Beef Burger",1499,"New · beef"],["Dip & Drown Burger",1499,"New · floating in mushroom sauce"]],
+  note:"<b>Add-ons:</b> cheese slice Rs 90 · olives or jalapeño Rs 59 · mushrooms Rs 69 · chicken patty Rs 225 · chicken fillet Rs 199"},
+ {id:"steak",name:"Steaks",items:[["Mushroom Steak",1599],["Jalapeño Steak",1449],["Mexican Steak",1449],["BBQ Steak",1299],["Black Pepper Steak",1299]]},
+ {id:"pasta",name:"Pasta",items:[["Baked Mushroom Pasta",1249],["Red Sauce Pasta",1099],["Alfredo",1199]]},
+ {id:"sandwich",name:"Sandwiches & Wraps",items:[["Cheese Lover Sandwich",849],["Cocktail Sandwich",899],["Club Sandwich",799],["Grilled Chicken Sandwich",749],["Grilled Chicken Wrap",749],["Cheese Wrap",749],["Crunchy Wrap",699]]},
+ {id:"sides",name:"Fries & Sides",items:[["Loaded Fries",674,"KAFEO signature"],["Masala Fries",374],["Pizza Fries",825],["Jalapeño Cheese Fries",674],["Mayo Cheese Fries",674],["Garlic Mayo Fries",474],["Plain Fries",374],["Chicken Strips (4 pc)",574],["Cheese Sticks (2 pc)",449],["Nuggets (5 pc)",499],["Onion Rings (6 pc)",399]],
+  note:"<b>Sauces:</b> burger, BBQ, garlic mayo, creamy mayo or chipotle Rs 89 each · honey mustard or peri peri Rs 99"},
+ {id:"wings",name:"Wings",items:[["Baked Wings (6 pc)",549],["Crispy Wings (6 pc)",549],["Honey Wings (5 pc)",499],["BBQ Wings (5 pc)",499]]},
+ {id:"coffee",name:"Coffee & Tea",items:[["Caramel Cloud Latte (iced)",800,"New"],["Chocolate Velvet Latte (iced)",800,"New"],["KAFEO Iced Latte",800,"New"],["Latte",499],["Cappuccino",449],["Espresso",345],["Long Black",345],["Mocha",399],["Hot Chocolate",549],["Kashmiri Chai",399],["Cardamom Tea",325],["Karak Chai",325],["Mix Karak",280],["Mix Cardamom",300],["Green Tea",150]]},
+ {id:"shakes",name:"Cold Coffee & Shakes",sizes:"S · L",items:[["Caramel Cold Coffee",[749,800]],["Oreo Cold Coffee",[749,800]],["Lotus Coffee",[null,950],"Large only"],["KitKat Shake",[699,950]],["Oreo Shake",[675,800]],["Vanilla Shake",[625,700]],["Chocolate Shake",[625,700]],["Strawberry Shake",[625,700]],["Lotus Shake",[null,900],"Large only"]],
   note:"<b>Sizes:</b> S = Standard · L = Large"},
- {id:"mocktails",name:"Mocktails & Drinks",items:[["Crimson Mist",[375,500],"KAFEO mocktail"],["Jade Valley",[375,500],"KAFEO mocktail"],["Blond Bomb Shell",[375,500],"KAFEO mocktail"],["Mint Margarita",[325,400]],["Iced Peach Tea",[325,400]],["Fresh Lime",[299,375]],["Coke / Sprite 345 ml",100],["Coke / Sprite 500 ml",150],["Coke / Sprite 1 L",220],["Coke / Sprite 1.5 L",300],["Water 500 ml",60],["Water 1.5 L",100]]},
- {id:"desserts",name:"Desserts",items:[["Nutella Brownie",399],["Belgian Chocolate Brownie",399],["Nuts Brownie",399],["Vanilla Ice Cream",350,"2 scoops"]]}
+ {id:"mocktails",name:"Mocktails & Drinks",items:[["Crimson Mist",[399,500],"KAFEO mocktail"],["Jade Valley",[375,500],"KAFEO mocktail"],["Blond Bomb Shell",[375,500],"KAFEO mocktail"],["Pink Zest",399,"New mocktail"],["Golden Fizz Mango Mojito",399,"New mocktail"],["Blueberry Lemon Spark",399,"New mocktail"],["Mint Margarita",[349,400]],["Iced Peach Tea",[325,400]],["Fresh Lime",[349,375]],["Coke / Sprite 345 ml",120],["Coke / Sprite 500 ml",160],["Coke / Sprite 1 L",260],["Coke / Sprite 1.5 L",320],["Water 500 ml",80],["Water 1.5 L",190]]},
+ {id:"desserts",name:"Desserts",items:[["Nutella Brownie",449],["Belgian Chocolate Brownie",449],["Nuts Brownie",449],["Brownie with Ice Cream",599,"Any brownie"],["Vanilla Ice Cream",350,"2 scoops"]]}
 ];
 const DEALS=[
  ["Starter Boost",549,["Zinger Burger","Regular Coke"],"For one"],
  ["Buddy Boost",1049,["Zinger Burger","Fiery Fillet Burger","Coke 500 ml"],"For two"],
  ["Pizza Power-Up",1249,["Small Tikka Pizza","Crispy Wings","Mint Margarita"],"For one or two"],
  ["Fries Frenzy",1999,["Large Tikka or Fajita Pizza","Loaded Fries","Coke 1.5 L"],"For three"],
- ["Pizza Combo",2449,["Medium Kafeo Special Pizza","Crispy Wings","Plain Fries","2 Mint Margaritas"],"For two to three"],
+ ["Pizza Combo",2499,["Medium Kafeo Special Pizza","Crispy Wings","Plain Fries","2 Mint Margaritas"],"For two to three"],
  ["Pizza Party Special",2999,["2 Large Tikka or Fajita Pizzas","2 dips","Coke 1.5 L"],"For four to five"],
  ["Kafeo Gathering",3999,["Large Kafeo Special Pizza","Loaded Fries","Hot & Crispy Burger","Grilled Sandwich","Nuggets","Coke 1.5 L"],"For the whole table"]
 ];
@@ -1669,11 +1669,11 @@ const mw=[...mt.children];
 
 /* ---------- signatures ---------- */
 const SIG=[
- ["Kafeo Special Pizza","Kafeo Special Pizza (M)",1549,"Our signature pizza with homemade tomato sauce, mozzarella and premium toppings",IMGS["r-pizza"],"pizza","Medium"],
- ["Cocktail Sandwich","Cocktail Sandwich",774,"Savory chicken with creamy cheese and tangy pickles, layered between fresh bread",IMGS["sig-sandwich"],"sandwich",""],
- ["Premium Mushroom Steak","Mushroom Steak",1349,"Chicken fillet marinated in mushroom sauce, grilled and topped with mushrooms","#steak","steak",""],
- ["Crimson Mist","Crimson Mist (S)",375,"KAFEO's house mocktail: bright, fizzy and ruby red","#mocktail","",""],
- ["Out of Control Burger","Out of Control Burger",949,"Chicken patty, marinated fillet, cheddar, onion rings and a sauce that packs a punch",IMGS["r-burger"],"burgers",""]
+ ["Kafeo Special Pizza","Kafeo Special Pizza (M)",1649,"Our signature pizza with homemade tomato sauce, mozzarella and premium toppings",IMGS["r-pizza"],"pizza","Medium"],
+ ["Cocktail Sandwich","Cocktail Sandwich",899,"Savory chicken with creamy cheese and tangy pickles, layered between fresh bread",IMGS["sig-sandwich"],"sandwich",""],
+ ["Premium Mushroom Steak","Mushroom Steak",1599,"Chicken fillet marinated in mushroom sauce, grilled and topped with mushrooms","#steak","steak",""],
+ ["Crimson Mist","Crimson Mist (S)",399,"KAFEO's house mocktail: bright, fizzy and ruby red","#mocktail","",""],
+ ["Out of Control Burger","Out of Control Burger",999,"Chicken patty, marinated fillet, cheddar, onion rings and a sauce that packs a punch",IMGS["r-burger"],"burgers",""]
 ];
 $("#track").innerHTML=SIG.map(([n,key,p,d,im,c,tag],i)=>`<article class="s5" data-r style="transition-delay:${i*70}ms" data-cur="Add">${im.startsWith("#")?`<div class="s5im art"><svg aria-hidden="true"><use href="#i-${im.slice(1)}"/></svg></div>`:`<div class="s5im"><img class="rip" src="${im}" alt="${esc(n)} at KAFEO" loading="lazy"></div>`}<span class="no">${String(i+1).padStart(2,"0")}</span><div class="s5b"><h3>${esc(n)}</h3><p>${esc(d)}</p><div class="s5f"><span class="price">${fmt(p)}${tag?` <small>· ${tag}</small>`:""}</span><button class="add" data-n="${esc(key)}" data-p="${p}"${c?` data-c="${c}"`:""} aria-label="Add ${esc(n)}">+</button></div></div></article>`).join("");
 $$("#track [data-r]").forEach(el=>{if(window.io)io.observe(el)});
@@ -1920,15 +1920,15 @@ function addItem(name,price,x,y,cat){
 /* ---------- item options + add-ons (customise modal) ---------- */
 const SPICE=["Regular","Mild","Extra spicy"];
 const OPTS={
- burgers:{groups:[["Spice",SPICE,1],["Remove",["No onions","No mayo","No lettuce"],0]],add:[["Cheese slice",70],["Jalapeño",50],["Mushrooms",70],["Extra chicken patty",200],["Chicken fillet",180]]},
- sandwich:{groups:[["Spice",SPICE,1],["Remove",["No onions","No mayo"],0]],add:[["Cheese slice",70],["Jalapeño",50]]},
- steak:{groups:[["Cooked",["Medium","Medium well","Well done"],1]],add:[["Mushrooms",70],["Jalapeño",50],["Cheese slice",70]]},
- pasta:{groups:[["Spice",SPICE,1]],add:[["Mushrooms",70],["Olives",50]]},
+ burgers:{groups:[["Spice",SPICE,1],["Remove",["No onions","No mayo","No lettuce"],0]],add:[["Cheese slice",90],["Jalapeño",59],["Mushrooms",69],["Extra chicken patty",225],["Chicken fillet",199]]},
+ sandwich:{groups:[["Spice",SPICE,1],["Remove",["No onions","No mayo"],0]],add:[["Cheese slice",90],["Jalapeño",59]]},
+ steak:{groups:[["Cooked",["Medium","Medium well","Well done"],1]],add:[["Mushrooms",69],["Jalapeño",59],["Cheese slice",90]]},
+ pasta:{groups:[["Spice",SPICE,1]],add:[["Mushrooms",69],["Olives",59]]},
  pizza:{groups:[],add:"pizza"},
- sides:{groups:[],add:[["Garlic mayo sauce",70],["BBQ sauce",70],["Chipotle sauce",70],["Burger sauce",70],["Creamy mayo sauce",70],["Honey mustard sauce",70],["Peri peri sauce",90]]},
- wings:{groups:[["Spice",SPICE,1]],add:[["BBQ sauce",70],["Garlic mayo sauce",70],["Honey mustard sauce",70],["Peri peri sauce",90]]}
+ sides:{groups:[],add:[["Garlic mayo sauce",89],["BBQ sauce",89],["Chipotle sauce",89],["Burger sauce",89],["Creamy mayo sauce",89],["Honey mustard sauce",99],["Peri peri sauce",99]]},
+ wings:{groups:[["Spice",SPICE,1]],add:[["BBQ sauce",89],["Garlic mayo sauce",89],["Honey mustard sauce",99],["Peri peri sauce",99]]}
 };
-function pizzaAdds(size){const i={S:0,M:1,L:2}[size]??1;return [["Extra cheese",[70,130,200][i]],["Extra chicken",[70,130,200][i]],["Extra sausage",[40,80,120][i]],["Olives",50],["Jalapeño",50],["Mushrooms",70]]}
+function pizzaAdds(size){const i={S:0,M:1,L:2}[size]??1;return [["Extra cheese",[80,150,220][i]],["Extra chicken",[90,150,220][i]],["Extra sausage",[50,90,130][i]],["Olives",59],["Jalapeño",59],["Mushrooms",69]]}
 const cm=$("#cm"),cmBg=$("#cmBg");
 function closeCM(){cm.hidden=cmBg.hidden=true}
 cmBg.onclick=closeCM;
@@ -1956,7 +1956,7 @@ function openCustom(name,price,cat,x,y){
 /* ---------- "goes well with" drink suggestion ---------- */
 const toast=$("#toast");let toastT;
 function suggestDrink(){
- const sg=[["Mint Margarita (S)",325],["Coke / Sprite 345 ml",100],["KAFEO Iced Latte",800],["Crimson Mist (S)",375]];
+ const sg=[["Mint Margarita (S)",349],["Coke / Sprite 345 ml",120],["KAFEO Iced Latte",800],["Crimson Mist (S)",399]];
  toast.innerHTML=`<div class="tt"><b style="font-weight:600">Goes well with a drink?</b><button aria-label="Close" id="tX">×</button></div><div class="sg">${sg.map(([n,p])=>`<button data-n="${esc(n)}" data-p="${p}">+ ${esc(n)} · Rs ${p}</button>`).join("")}</div>`;
  toast.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>toast.hidden=true,7000);
  $("#tX").onclick=()=>toast.hidden=true;
@@ -2201,7 +2201,7 @@ $("#sndBtn").onclick=()=>{const on=SND.toggle();const b=$("#sndBtn");b.classList
 /* ---------- pizza builder ---------- */
 (function(){
  const PZ=MENU.find(c=>c.id==="pizza").items;const sel=$("#pzFlav");sel.innerHTML=PZ.map(([n],i)=>`<option value="${i}">${esc(n)} Pizza</option>`).join("");
- const TOPS=[["cheese","Extra cheese",[70,130,200]],["chicken","Extra chicken",[70,130,200]],["sausage","Extra sausage",[40,80,120]],["olives","Olives",[50,50,50]],["jalapeno","Jalapeño",[50,50,50]],["mush","Mushrooms",[70,70,70]]];
+ const TOPS=[["cheese","Extra cheese",[80,150,220]],["chicken","Extra chicken",[90,150,220]],["sausage","Extra sausage",[50,90,130]],["olives","Olives",[59,59,59]],["jalapeno","Jalapeño",[59,59,59]],["mush","Mushrooms",[69,69,69]]];
  let size=1;const on=new Set();const tb=$("#pzTops"),grp=$("#pzTop");
  function drawTops(){tb.innerHTML=TOPS.map(([k,n,p])=>`<button class="top" data-k="${k}" aria-pressed="${on.has(k)}">${n}<small>+${p[size]}</small></button>`).join("")}
  function piece(k,x,y,d){const T={cheese:`<circle cx="${x}" cy="${y}" r="7" fill="#fff4cf"/>`,chicken:`<rect x="${x-8}" y="${y-5}" width="16" height="10" rx="4" fill="#b8733a"/>`,sausage:`<circle cx="${x}" cy="${y}" r="8" fill="#a8321e"/><circle cx="${x-2}" cy="${y-2}" r="1.6" fill="#f3c9a6"/>`,
@@ -2369,10 +2369,10 @@ function payLabel(type){const j=$("#pm-jazz")&&$("#pm-jazz").checked;return j?"J
  function lineCat(n){if(n.startsWith("Deal: "))return"deal";if(n.startsWith("Custom: "))return"coffee";const k=keys.find(k=>n===k||n.startsWith(k+" ("));return k?catOf[k]:""}
  const DRINKS=["coffee","shakes","mocktails"],MAINS=["pizza","burgers","steak","pasta","sandwich","wings"];
  const SUG={
-  drink:["Thirsty? Add a drink",[["Mint Margarita (S)",325],["Crimson Mist (S)",375],["Coke / Sprite 500 ml",150],["KAFEO Iced Latte",800]]],
-  side:["Make it a meal",[["Plain Fries",299],["Garlic Mayo Fries",399],["Loaded Fries",699]]],
-  sweet:["Something sweet to finish?",[["Nutella Brownie",399],["Vanilla Ice Cream",350]]],
-  bite:["A bite with your coffee?",[["Belgian Chocolate Brownie",399],["Cheese Sticks (2 pc)",399]]]
+  drink:["Thirsty? Add a drink",[["Mint Margarita (S)",349],["Crimson Mist (S)",399],["Coke / Sprite 500 ml",160],["KAFEO Iced Latte",800]]],
+  side:["Make it a meal",[["Plain Fries",374],["Garlic Mayo Fries",474],["Loaded Fries",674]]],
+  sweet:["Something sweet to finish?",[["Nutella Brownie",449],["Brownie with Ice Cream",599]]],
+  bite:["A bite with your coffee?",[["Belgian Chocolate Brownie",449],["Cheese Sticks (2 pc)",449]]]
  };
  const up=$("#upsell"),stat=$("#kxStat"),statT=$("#kxStatT");
  function hoursNow(){const n=pk(),d=n.getDay(),h=n.getHours()+n.getMinutes()/60,late=x=>x===5||x===6||x===0,prev=(d+6)%7;
